@@ -13,6 +13,7 @@ export default function Bag() {
         loading,
         increaseQuantity,
         decreaseQuantity,
+        removeFromBag,
     } = useBag();
 
     const {
@@ -87,65 +88,61 @@ export default function Bag() {
 
                         {products.map((item) => (
                             <div key={`${item.id}-${item.size}`}
-                                className="bg-white border border-[#E5E7EB] p-4 flex gap-4">
+                                className="bg-white border border-[#E5E7EB] p-3 sm:p-4 flex gap-3 sm:gap-4">
 
                                 {/* Product Image */}
-                                <div className="flex-shrink-0 w-28 h-32 bg-[#F8F9FA] overflow-hidden">
+                                <div className="flex-shrink-0 w-20 h-24 sm:w-28 sm:h-32 bg-[#F8F9FA] overflow-hidden">
                                     <img src={item.image} alt={item.name}
                                         className="w-full h-full object-cover" />
                                 </div>
 
                                 {/* Product Info */}
                                 <div className="flex-1 min-w-0">
-                                    <div className="flex justify-between items-start gap-3">
+                                    <div className="flex justify-between items-start gap-2">
                                         <div>
-                                            <p className="text-[10px] text-gray-400 font-semibold tracking-widest uppercase mb-1">
+                                            <p className="text-[9px] sm:text-[10px] text-gray-400 font-semibold tracking-widest uppercase mb-0.5">
                                                 {item.category === "Men" ? "Premium Collection" : "Luxury Collection"}
                                             </p>
-                                            <h3 className="text-sm font-black text-[#0F172A] leading-tight">{item.name}</h3>
+                                            <h3 className="text-xs sm:text-sm font-black text-[#0F172A] leading-tight">{item.name}</h3>
                                         </div>
-                                        <p className="text-sm font-black text-[#0F172A] flex-shrink-0">
+                                        <p className="text-xs sm:text-sm font-black text-[#0F172A] flex-shrink-0">
                                             ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                                         </p>
                                     </div>
 
                                     {/* Size + Return */}
-                                    <div className="flex items-center gap-3 mt-2">
-                                        <span className="text-xs text-gray-500 border border-[#E5E7EB] px-2.5 py-0.5 font-semibold">
+                                    <div className="flex items-center gap-3 mt-1.5">
+                                        <span className="text-[10px] sm:text-xs text-gray-500 border border-[#E5E7EB] px-2 py-0.5 font-semibold">
                                             Size: {item.size}
                                         </span>
-                                        <span className="text-[10px] text-gray-400 font-medium">↩ 7 Day Return</span>
+                                        <span className="text-[9px] sm:text-[10px] text-gray-400 font-medium">↩ 7 Day Return</span>
                                     </div>
 
                                     {/* Unit Price */}
-                                    <p className="text-xs text-gray-400 mt-1">
+                                    <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
                                         ₹{Math.round(Number(item.price)).toLocaleString("en-IN")} × {item.quantity}
                                     </p>
 
                                     {/* Quantity + Remove + Wishlist */}
-                                    <div className="flex items-center gap-4 mt-3">
+                                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3">
                                         <div className="flex items-center border border-[#E5E7EB]">
                                             <button onClick={() => decreaseQuantity(item.id, item.size)}
-                                                className="w-8 h-8 flex items-center justify-center text-[#0F172A] hover:bg-[#F8F9FA] transition text-base font-bold">
+                                                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#0F172A] hover:bg-[#F8F9FA] transition text-sm font-bold">
                                                 −
                                             </button>
-                                            <span className="w-10 text-center text-sm font-bold text-[#0F172A]">
+                                            <span className="w-8 sm:w-10 text-center text-xs sm:text-sm font-bold text-[#0F172A]">
                                                 {item.quantity}
                                             </span>
                                             <button onClick={() => increaseQuantity(item.id, item.size)}
-                                                className="w-8 h-8 flex items-center justify-center text-[#0F172A] hover:bg-[#F8F9FA] transition text-base font-bold">
+                                                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#0F172A] hover:bg-[#F8F9FA] transition text-sm font-bold">
                                                 +
                                             </button>
                                         </div>
 
-                                        <div className="w-px h-4 bg-[#E5E7EB]" />
-
-                                        <button onClick={() => decreaseQuantity(item.id, item.size)}
+                                        <button onClick={() => removeFromBag(item.id, item.size)}
                                             className="text-xs font-bold text-gray-400 hover:text-red-500 transition uppercase tracking-wider">
                                             Remove
                                         </button>
-
-                                        <div className="w-px h-4 bg-[#E5E7EB]" />
 
                                         {/* ── Working Wishlist Button ── */}
                                         <button

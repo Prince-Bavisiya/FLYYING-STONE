@@ -72,15 +72,15 @@ export default function ProductDetails() {
             <Navbar />
 
             {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto px-8 pt-4 pb-0">
+            <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-4 pb-0">
                 <p className="text-xs text-gray-400 tracking-[1px]">
                     HOME &nbsp;/&nbsp; {product.category?.toUpperCase()} &nbsp;/&nbsp;
                     <span className="text-black">{product.name}</span>
                 </p>
             </div>
 
-            <div className="max-w-7xl mx-auto py-8 px-8">
-                <div className="grid lg:grid-cols-[1fr_1fr] gap-14 items-start">
+            <div className="max-w-7xl mx-auto py-8 px-4 sm:px-8">
+                <div className="grid lg:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-start">
 
                     {/* ── LEFT — Image ── */}
                     <div className="sticky top-6">
@@ -88,7 +88,7 @@ export default function ProductDetails() {
                             <img
                                 src={product.image}
                                 alt={product.name}
-                                className={`w-full h-[560px] object-cover hover:scale-105 transition-transform duration-700 ${isOutOfStock ? "opacity-50" : ""}`}
+                                className={`w-full h-[380px] sm:h-[500px] md:h-[560px] object-cover hover:scale-105 transition-transform duration-700 ${isOutOfStock ? "opacity-50" : ""}`}
                             />
 
                             {/* ✅ Out of Stock Badge */}

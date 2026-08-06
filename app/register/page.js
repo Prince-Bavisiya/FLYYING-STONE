@@ -3,9 +3,10 @@
 import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Register() {
-
+    const { login } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,7 +28,12 @@ export default function Register() {
 
             console.log(res.data);
 
-            window.location.href = "/login";
+            if (res.data.success && res.data.token) {
+                login(res.data.token, res.data.role || "user", res.data.user);
+                window.location.href = "/";
+            } else {
+                window.location.href = "/login";
+            }
 
         } catch (error) {
 

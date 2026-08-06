@@ -13,38 +13,46 @@ function OrderSuccessContent() {
     const [copied, setCopied] = useState(false);
 
     useEffect(() => {
-
-        const sessionId = searchParams.get("session_id"); // ✅ Stripe session ID
+        const sessionId = searchParams.get("session_id");
         const orderIdFromUrl = searchParams.get("order_id");
 
-        // ✅ Token ke saath verify karo
-        if (sessionId) {
-            const token = localStorage.getItem("token");
-            axios.get(`http://localhost:5000/api/payment/verify/${sessionId}`, {
-                headers: { authorization: token }
-            })
-                .then(res => console.log("Payment verified:", res.data))
-                .catch(console.error);
-        }
+        const fetchAndVerify = async () => {
+            if (sessionId) {
+                try {
+                    const token = localStorage.getItem("token");
+                    const res = await axios.get(`http://localhost:5000/api/payment/verify/${sessionId}`, {
+                        headers: { authorization: token }
+                    });
+                    console.log("Payment verified:", res.data);
+                    if (res.data.success && res.data.order) {
+                        setOrder(res.data.order);
+                        return;
+                    }
+                } catch (err) {
+                    console.error("Verification failed:", err);
+                }
+            }
 
-        const pending = sessionStorage.getItem("pendingOrder");
-        if (pending) {
-            try {
-                const parsed = JSON.parse(pending);
-                setOrder({
-                    ...parsed,
-                    id: orderIdFromUrl || parsed.id,
-                    discount: parsed.discount || 0,
-                    finalTotal: parsed.finalTotal ?? parsed.total,
-                    couponCode: parsed.couponCode || null,
-                });
-            } catch (e) {
+            const pending = sessionStorage.getItem("pendingOrder");
+            if (pending) {
+                try {
+                    const parsed = JSON.parse(pending);
+                    setOrder({
+                        ...parsed,
+                        id: orderIdFromUrl || parsed.id,
+                        discount: parsed.discount || 0,
+                        finalTotal: parsed.finalTotal ?? parsed.total,
+                        couponCode: parsed.couponCode || null,
+                    });
+                } catch (e) {
+                    setOrder({ id: orderIdFromUrl || Date.now(), total: 0, finalTotal: 0, discount: 0, products: [], date: new Date().toLocaleDateString() });
+                }
+            } else {
                 setOrder({ id: orderIdFromUrl || Date.now(), total: 0, finalTotal: 0, discount: 0, products: [], date: new Date().toLocaleDateString() });
             }
-        } else {
-            setOrder({ id: orderIdFromUrl || Date.now(), total: 0, finalTotal: 0, discount: 0, products: [], date: new Date().toLocaleDateString() });
-        }
+        };
 
+        fetchAndVerify();
     }, []);
 
     const handleCopyCoupon = () => {

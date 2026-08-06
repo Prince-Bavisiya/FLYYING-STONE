@@ -12,14 +12,14 @@ export default function Home() {
     const slides = [
         {
             image: "/images/store10.png",
-            objectPosition: "center center",
+            objectPosition: "82% center",
             title: "ELEVATE\nYOUR\nSTYLE",
             subtitle: "Discover premium fashion crafted for modern men and women. Timeless designs, luxury fabrics and everyday confidence.",
             tag: "NEW SEASON 2026",
         },
         {
             image: "/images/store11.png",
-            objectPosition: "center center",
+            objectPosition: "82% center",
             title: "LUXURY\nREDEFINED",
             subtitle: "Premium outfits designed for those who appreciate timeless elegance and exceptional craftsmanship.",
             tag: "EXCLUSIVE COLLECTION",
@@ -92,7 +92,7 @@ export default function Home() {
             {/* ================= HERO ================= */}
             {/* isolate creates a fresh stacking context so this section's internal
                 z-20 / z-30 layers can NEVER climb above the sticky navbar above it */}
-            <section className="relative isolate overflow-hidden bg-gray-900" style={{ height: "88vh" }}>
+            <section className="relative isolate overflow-hidden bg-gray-900 h-[65vh] md:h-[88vh] min-h-[540px] md:min-h-0">
 
                 {/* Slides */}
                 <div
@@ -137,16 +137,16 @@ export default function Home() {
                 {/* Nav arrows */}
                 <button
                     onClick={prevSlide}
-                    className="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 flex items-center justify-center"
+                    className="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 hidden sm:flex items-center justify-center"
                 >❮</button>
                 <button
                     onClick={nextSlide}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 flex items-center justify-center"
+                    className="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 hidden sm:flex items-center justify-center"
                 >❯</button>
 
                 {/* Content */}
                 <div className="absolute inset-0 z-20 flex items-center">
-                    <div className="max-w-7xl mx-auto px-12 w-full">
+                    <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                         <div className="max-w-xl">
 
                             {/* Tag */}
@@ -187,7 +187,7 @@ export default function Home() {
                             </div>
 
                             {/* Stats */}
-                            <div className="flex gap-8 mt-10 pt-8 border-t border-white/15">
+                            <div className="hidden sm:flex flex-wrap gap-x-8 gap-y-4 mt-10 pt-8 border-t border-white/15">
                                 {[
                                     { val: "50K+", label: "Customers" },
                                     { val: "500+", label: "Products" },
@@ -224,7 +224,7 @@ export default function Home() {
                 </div>
 
                 {/* Scroll hint */}
-                <div className="absolute bottom-8 right-10 z-30 flex flex-col items-center gap-2">
+                <div className="absolute bottom-8 right-10 z-30 hidden md:flex flex-col items-center gap-2">
                     <div className="w-[1px] h-10 bg-gradient-to-b from-white/0 to-white/40" />
                     <p className="text-white/40 text-[10px] tracking-[3px] uppercase rotate-90 origin-center mt-4">Scroll</p>
                 </div>
@@ -232,13 +232,13 @@ export default function Home() {
             </section>
 
             {/* ================= MEN COLLECTION ================= */}
-            <section id="collections" className="bg-[#F8F8F8] py-20">
-                <div className="max-w-7xl mx-auto px-8">
-                    <div className="flex justify-between items-end mb-10">
+            <section id="collections" className="bg-[#F8F8F8] py-12 md:py-20">
+                <div className="max-w-7xl mx-auto px-4 md:px-8">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-10 gap-4">
                         <div>
                             <p className="uppercase tracking-[6px] text-[#EF2E2E] font-semibold text-xs">MEN</p>
-                            <h2 className="text-4xl font-black mt-2">Premium Street Collection</h2>
-                            <p className="text-gray-500 mt-3 max-w-xl text-sm">Luxury essentials designed for confidence and everyday style.</p>
+                            <h2 className="text-3xl md:text-4xl font-black mt-2">Premium Street Collection</h2>
+                            <p className="text-gray-500 mt-2 max-w-xl text-sm hidden sm:block">Luxury essentials designed for confidence and everyday style.</p>
                         </div>
                         <button onClick={() => router.push("/men")}
                             className="group flex items-center gap-3 text-sm font-bold tracking-[3px] uppercase">
@@ -246,7 +246,7 @@ export default function Home() {
                             <span className="w-8 h-8 rounded-full border border-black flex items-center justify-center text-xs group-hover:bg-[#EF2E2E] group-hover:border-[#EF2E2E] group-hover:text-white transition duration-300">→</span>
                         </button>
                     </div>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                         {products.filter((p) => p.category === "Men").slice(0, 4).map((product) => (
                             <ProductCard key={product.id} product={product} dark={false} />
                         ))}
@@ -255,13 +255,13 @@ export default function Home() {
             </section>
 
             {/* ================= WOMEN COLLECTION ================= */}
-            <section className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-8">
-                    <div className="flex justify-between items-end mb-10">
+            <section className="py-12 md:py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-4 md:px-8">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 md:mb-10 gap-4">
                         <div>
                             <p className="uppercase tracking-[6px] text-[#EF2E2E] font-semibold text-xs">WOMEN</p>
-                            <h2 className="text-4xl font-black mt-2">Elegant Fashion Collection</h2>
-                            <p className="text-gray-500 mt-3 max-w-xl text-sm">Modern silhouettes crafted with premium fabrics and timeless elegance.</p>
+                            <h2 className="text-3xl md:text-4xl font-black mt-2">Elegant Fashion Collection</h2>
+                            <p className="text-gray-500 mt-2 max-w-xl text-sm hidden sm:block">Modern silhouettes crafted with premium fabrics and timeless elegance.</p>
                         </div>
                         <button onClick={() => router.push("/women")}
                             className="group flex items-center gap-3 text-sm font-bold tracking-[3px] uppercase">
@@ -269,7 +269,7 @@ export default function Home() {
                             <span className="w-8 h-8 rounded-full border border-black flex items-center justify-center text-xs group-hover:bg-[#EF2E2E] group-hover:border-[#EF2E2E] group-hover:text-white transition duration-300">→</span>
                         </button>
                     </div>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                         {products.filter((p) => p.category === "Women").slice(0, 4).map((product) => (
                             <ProductCard key={product.id} product={product} dark={false} />
                         ))}
@@ -278,14 +278,14 @@ export default function Home() {
             </section>
 
             {/* ================= NEW ARRIVALS ================= */}
-            <section id="new-arrivals" className="bg-black py-20">
-                <div className="max-w-7xl mx-auto px-8">
+            <section id="new-arrivals" className="bg-black py-12 md:py-20">
+                <div className="max-w-7xl mx-auto px-4 md:px-8">
                     <p className="uppercase tracking-[8px] text-[#EF2E2E] font-semibold text-center text-xs">NEW ARRIVALS</p>
-                    <h2 className="text-5xl md:text-6xl font-black text-center text-white mt-4">JUST DROPPED</h2>
-                    <p className="text-white/60 text-center mt-4 max-w-2xl mx-auto text-sm">
+                    <h2 className="text-4xl md:text-6xl font-black text-center text-white mt-4">JUST DROPPED</h2>
+                    <p className="text-white/60 text-center mt-3 max-w-2xl mx-auto text-sm">
                         Discover our newest premium collection designed for everyday luxury.
                     </p>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-14">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-10 md:mt-14">
                         {products.slice(0, 4).map((product) => (
                             <ProductCard key={product.id} product={product} dark={true} />
                         ))}
@@ -294,9 +294,9 @@ export default function Home() {
             </section>
 
             {/* ================= FEATURES ================= */}
-            <section className="py-16 bg-white border-t border-gray-100">
-                <div className="max-w-7xl mx-auto px-8">
-                    <div className="grid md:grid-cols-4 gap-10 text-center">
+            <section className="py-12 md:py-16 bg-white border-t border-gray-100">
+                <div className="max-w-7xl mx-auto px-4 md:px-8">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 text-center">
                         {[
                             { icon: "🚚", title: "Free Shipping", sub: "Across India" },
                             { icon: "💎", title: "Premium Quality", sub: "Finest Materials" },

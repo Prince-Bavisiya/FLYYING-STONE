@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "../context/AuthContext";
 import { BagProvider } from "../context/BagContext";
 import { WishlistProvider } from "../context/WishlistContext";
+import BackButton from "../components/BackButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
         <AuthProvider>
           <BagProvider>
             <WishlistProvider>
+              <BackButton />
               {children}
 
               <Toaster

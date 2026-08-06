@@ -10,130 +10,130 @@ function LoginContent() {
     const { login } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
+    const handleLogin = async () => {
 
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
+        try {
 
-const handleLogin = async () => {
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_URL}/api/auth/login`,
+                {
+                    email,
+                    password
+                }
+            );
 
-    try {
+            // localStorage.setItem(
+            //     "token",
+            //     res.data.token
+            // );
 
-        const res = await axios.post(
-            "http://localhost:5000/api/auth/login",
-            {
-                email,
-                password
+            // localStorage.setItem(
+            //     "role",
+            //     res.data.role
+            // );
+
+            login(res.data.token, res.data.role || "user", res.data.user);
+
+            const redirect = searchParams.get("redirect");
+
+            if ((res.data.role || "user") === "admin") {
+                router.push("/admin");
+            } else {
+                router.push(redirect || "/");
             }
-        );
-        console.log("LOGIN RESPONSE =", res.data);
 
-        localStorage.setItem(
-            "token",
-            res.data.token
-        );
+        } catch (error) {
 
-        localStorage.setItem(
-            "role",
-            res.data.role
-        );
-        login(res.data.token, res.data.role || "user");
+            alert(
+                error.response?.data?.message ||
+                "Login Failed"
+            );
 
-        const redirect = searchParams.get("redirect");
-
-        if ((res.data.role || "user") === "admin") {
-            router.push("/admin");
-        } else {
-            router.push(redirect || "/");
         }
-        
-    } catch (error) {
+    };
 
-        alert(
-            error.response?.data?.message ||
-            "Login Failed"
-        );
+    return (
 
-    }
-};
+        <div className="relative min-h-screen">
 
-return (
+            <Image
+                src="/images/store2.png"
+                alt="Flyying Stone"
+                fill
+                priority
+                className="object-cover"
+            />
 
-    <div className="relative min-h-screen">
+            <div className="absolute inset-0 bg-black/70"></div>
 
-        <Image
-            src="/images/store2.png"
-            alt="Flyying Stone"
-            fill
-            priority
-            className="object-cover"
-        />
+            <div className="relative z-10 min-h-screen flex items-center justify-center px-5">
 
-        <div className="absolute inset-0 bg-black/70"></div>
+                <div className="w-full max-w-md backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-10 shadow-2xl">
 
-        <div className="relative z-10 min-h-screen flex items-center justify-center px-5">
+                    <div className="text-center mb-8">
 
-            <div className="w-full max-w-md backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-10 shadow-2xl">
+                        <h1 className="text-white text-5xl font-light tracking-[10px]">
+                            FLYYING STONE
+                        </h1>
 
-                <div className="text-center mb-8">
+                        <p className="text-gray-300 mt-4">
+                            Premium Fashion For Men & Women
+                        </p>
 
-                    <h1 className="text-white text-5xl font-light tracking-[10px]">
-                        FLYYING STONE
-                    </h1>
+                    </div>
 
-                    <p className="text-gray-300 mt-4">
-                        Premium Fashion For Men & Women
+                    <h2 className="text-white text-3xl font-semibold mb-2">
+                        Welcome Back
+                    </h2>
+
+                    <p className="text-gray-300 mb-8">
+                        Login to continue
                     </p>
 
-                </div>
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail(e.target.value)
+                        }
+                        className="w-full p-4 mb-4 rounded-lg bg-white/20 border border-white/20 text-white placeholder-gray-300 outline-none"
+                    />
 
-                <h2 className="text-white text-3xl font-semibold mb-2">
-                    Welcome Back
-                </h2>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) =>
+                            setPassword(e.target.value)
+                        }
+                        className="w-full p-4 mb-6 rounded-lg bg-white/20 border border-white/20 text-white placeholder-gray-300 outline-none"
+                    />
 
-                <p className="text-gray-300 mb-8">
-                    Login to continue
-                </p>
-
-                <input
-                    type="email"
-                    placeholder="Email Address"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                    className="w-full p-4 mb-4 rounded-lg bg-white/20 border border-white/20 text-white placeholder-gray-300 outline-none"
-                />
-
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
-                    className="w-full p-4 mb-6 rounded-lg bg-white/20 border border-white/20 text-white placeholder-gray-300 outline-none"
-                />
-
-                <button
-                    onClick={handleLogin}
-                    className="w-full bg-white text-black py-4 rounded-lg font-semibold hover:bg-gray-200 transition"
-                >
-                    LOGIN
-                </button>
-
-                <div className="mt-8 text-center">
-
-                    <p className="text-gray-300">
-                        New Customer?
-                    </p>
-
-                    <a
-                        href="/register"
-                        className="text-white font-semibold underline mt-2 inline-block"
+                    <button
+                        onClick={handleLogin}
+                        className="w-full bg-white text-black py-4 rounded-lg font-semibold hover:bg-gray-200 transition"
                     >
-                        Create Account
-                    </a>
+                        LOGIN
+                    </button>
+
+                    <div className="mt-8 text-center">
+
+                        <p className="text-gray-300">
+                            New Customer?
+                        </p>
+
+                        <a
+                            href="/register"
+                            className="text-white font-semibold underline mt-2 inline-block"
+                        >
+                            Create Account
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -141,9 +141,7 @@ return (
 
         </div>
 
-    </div>
-
-);
+    );
 }
 
 export default function Login() {
