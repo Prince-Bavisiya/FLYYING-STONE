@@ -474,7 +474,7 @@ function ProfileContent() {
 
                                         {/* Image */}
                                         <div className="relative overflow-hidden bg-[#F8F9FA] h-52 cursor-pointer"
-                                            onClick={() => router.push(`/products/${item.product_id}`)}>
+                                            onClick={() => router.push(`/product/${item.product_id}`)}>
                                             <img
                                                 src={item.image}
                                                 alt={item.name}

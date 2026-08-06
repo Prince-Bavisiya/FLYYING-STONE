@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import ChatBot from "../components/ai/ChatBot";
 
 
 export default function Home() {
@@ -350,7 +351,7 @@ export default function Home() {
 
                 </div>
             </footer>
-
+            <ChatBot />
         </div>
     );
 }
