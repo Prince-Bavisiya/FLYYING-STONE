@@ -52,6 +52,25 @@ app.use("/api/coupons", couponRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/chat", chatRoutes);
 
+app.get("/api/health", (req, res) => {
+    const db = require("./config/db");
+    db.query("SELECT 1", (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                status: "error",
+                message: "Database connection failed",
+                error: err.message,
+                dbHost: process.env.DB_HOST ? `${process.env.DB_HOST.slice(0, 10)}...` : "not set (falls back to localhost)"
+            });
+        }
+        res.json({
+            status: "ok",
+            message: "Database connection healthy",
+            dbHost: process.env.DB_HOST ? `${process.env.DB_HOST.slice(0, 10)}...` : "not set"
+        });
+    });
+});
+
 app.get("/", (req, res) => {
     res.send("E-commerce API Running");
 });
