@@ -13,14 +13,14 @@ export default function Home() {
     const slides = [
         {
             image: "/images/store10.png",
-            objectPosition: "82% center",
+            objectPosition: "82% 15%",
             title: "ELEVATE\nYOUR\nSTYLE",
             subtitle: "Discover premium fashion crafted for modern men and women. Timeless designs, luxury fabrics and everyday confidence.",
             tag: "NEW SEASON 2026",
         },
         {
             image: "/images/store11.png",
-            objectPosition: "82% center",
+            objectPosition: "80% 15%",
             title: "LUXURY\nREDEFINED",
             subtitle: "Premium outfits designed for those who appreciate timeless elegance and exceptional craftsmanship.",
             tag: "EXCLUSIVE COLLECTION",
@@ -93,110 +93,123 @@ export default function Home() {
             {/* ================= HERO ================= */}
             {/* isolate creates a fresh stacking context so this section's internal
                 z-20 / z-30 layers can NEVER climb above the sticky navbar above it */}
-            <section className="relative isolate overflow-hidden bg-gray-900 h-[65vh] md:h-[88vh] min-h-[540px] md:min-h-0">
+            <section className="relative overflow-hidden bg-black flex flex-col md:block h-auto md:h-[88vh] min-h-0 md:min-h-[600px] isolate">
 
-                {/* Slides */}
-                <div
-                    className="absolute inset-0 flex h-full transition-transform duration-[1800ms] ease-in-out"
-                    style={{
-                        width: `${slides.length * 100}%`,
-                        transform: `translateX(-${currentSlide * (100 / slides.length)}%)`,
-                    }}
-                >
-                    {slides.map((slide, index) => (
-                        <div
-                            key={index}
-                            className="relative h-full flex-shrink-0"
-                            style={{ width: `${100 / slides.length}%` }}
-                        >
-                            <img
-                                src={slide.image}
-                                alt="Hero"
-                                style={{
-                                    position: "absolute",
-                                    inset: 0,
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                    objectPosition: "60% top",
-                                }}
-                            />
+                {/* Image Slides Wrapper */}
+                <div className="relative w-full h-[56vh] sm:h-[62vh] md:absolute md:inset-0 md:h-full overflow-hidden z-10">
+                    <div
+                        className="absolute inset-0 flex h-full transition-transform duration-[1800ms] ease-in-out"
+                        style={{
+                            width: `${slides.length * 100}%`,
+                            transform: `translateX(-${currentSlide * (100 / slides.length)}%)`,
+                        }}
+                    >
+                        {slides.map((slide, index) => (
+                            <div
+                                key={index}
+                                className="relative h-full flex-shrink-0"
+                                style={{ width: `${100 / slides.length}%` }}
+                            >
+                                <img
+                                    src={slide.image}
+                                    alt="Hero"
+                                    style={{
+                                        position: "absolute",
+                                        inset: 0,
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                        objectPosition: slide.objectPosition || "60% top",
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Gradient overlay — Desktop only */}
+                    <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-transparent" />
+
+                    {/* Slide number indicator on mobile: elegant floating chip */}
+                    <div className="absolute bottom-4 left-6 z-30 flex md:hidden items-center gap-3 bg-black/40 backdrop-blur-sm px-3.5 py-1.5 rounded-full border border-white/10">
+                        <span className="text-white/60 text-[10px] font-semibold tracking-[2px]">0{currentSlide + 1}</span>
+                        <div className="flex gap-1.5">
+                            {slides.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentSlide(index)}
+                                    className={`transition-all duration-500 rounded-full ${currentSlide === index ? "w-4 h-1 bg-[#EF2E2E]" : "w-1 h-1 bg-white/40"}`}
+                                />
+                            ))}
                         </div>
-                    ))}
+                        <span className="text-white/40 text-[10px] font-semibold tracking-[2px]">0{slides.length}</span>
+                    </div>
                 </div>
 
-                {/* Gradient overlay — lighter, only left side dark for text readability */}
-                <div className="absolute inset-0"
-                    style={{
-                        background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0.05) 100%)"
-                    }}
-                />
+                {/* Subtle red glow (Desktop only) */}
+                <div className="hidden md:block absolute left-0 bottom-0 w-[400px] h-[400px] bg-red-700/10 blur-[120px] pointer-events-none" />
 
-                {/* Subtle red glow — much softer */}
-                <div className="absolute left-0 bottom-0 w-[400px] h-[400px] bg-red-700/10 blur-[120px] pointer-events-none" />
-
-                {/* Nav arrows */}
+                {/* Nav arrows (Desktop only) */}
                 <button
                     onClick={prevSlide}
-                    className="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 hidden sm:flex items-center justify-center"
+                    className="absolute left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 hidden sm:flex md:flex items-center justify-center"
                 >❮</button>
                 <button
                     onClick={nextSlide}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 hidden sm:flex items-center justify-center"
+                    className="absolute right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white/10 border border-white/20 text-white text-lg backdrop-blur-sm hover:bg-[#EF2E2E] hover:border-[#EF2E2E] transition duration-300 hidden sm:flex md:flex items-center justify-center"
                 >❯</button>
 
-                {/* Content */}
-                <div className="absolute inset-0 z-20 flex items-center">
-                    <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
+                {/* Content Block */}
+                <div className="relative z-20 bg-black px-6 py-10 md:absolute md:inset-0 md:bg-transparent md:px-12 md:py-0 md:flex md:items-center">
+                    <div className="max-w-7xl mx-auto w-full md:px-0">
                         <div className="max-w-xl">
 
                             {/* Tag */}
-                            <div className="flex items-center gap-3 mb-5">
-                                <div className="w-6 h-[2px] bg-[#EF2E2E]" />
-                                <p className="uppercase tracking-[6px] text-[#EF2E2E] font-semibold text-xs">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-5 h-[1.5px] bg-[#EF2E2E]" />
+                                <p className="uppercase tracking-[5px] text-[#EF2E2E] font-bold text-[10px]">
                                     {slides[currentSlide].tag}
                                 </p>
                             </div>
 
                             {/* Heading */}
-                            <h1 className="text-[clamp(2.8rem,5vw,4.5rem)] font-black leading-[1] text-white whitespace-pre-line tracking-tight">
+                            <h1 className="text-3xl sm:text-4xl md:text-[clamp(2.8rem,5vw,4.5rem)] font-black leading-[1.1] text-white whitespace-pre-line tracking-tight">
                                 {slides[currentSlide].title}
                             </h1>
 
                             {/* Divider */}
-                            <div className="w-14 h-[3px] bg-[#EF2E2E] mt-6 mb-5" />
+                            <div className="w-12 h-[2.5px] bg-[#EF2E2E] mt-5 mb-4" />
 
                             {/* Subtitle */}
-                            <p className="text-sm text-white/75 leading-7 max-w-sm">
+                            <p className="text-xs sm:text-sm text-gray-400 md:text-white/75 leading-6 md:leading-7 max-w-sm">
                                 {slides[currentSlide].subtitle}
                             </p>
 
                             {/* Buttons */}
-                            <div className="flex gap-4 mt-8">
+                            <div className="flex gap-3 mt-6 sm:mt-8">
                                 <button
                                     onClick={() => document.getElementById("new-arrivals")?.scrollIntoView({ behavior: "smooth" })}
-                                    className="bg-[#EF2E2E] hover:bg-red-700 transition-all duration-300 px-8 py-3.5 text-white text-xs font-bold uppercase tracking-[2px]"
+                                    className="bg-[#EF2E2E] hover:bg-red-700 transition-all duration-300 px-6 sm:px-8 py-3 text-white text-[10px] sm:text-xs font-bold uppercase tracking-[2px] flex-1 sm:flex-initial text-center"
                                 >
                                     SHOP NOW
                                 </button>
                                 <button
                                     onClick={() => document.getElementById("collections")?.scrollIntoView({ behavior: "smooth" })}
-                                    className="border border-white/60 text-white px-8 py-3.5 text-xs font-bold uppercase tracking-[2px] hover:bg-white hover:text-black transition-all duration-300"
+                                    className="border border-white/40 text-white px-6 sm:px-8 py-3 text-[10px] sm:text-xs font-bold uppercase tracking-[2px] hover:bg-white hover:text-black transition-all duration-300 flex-1 sm:flex-initial text-center"
                                 >
                                     EXPLORE
                                 </button>
                             </div>
 
-                            {/* Stats */}
-                            <div className="hidden sm:flex flex-wrap gap-x-8 gap-y-4 mt-10 pt-8 border-t border-white/15">
+                            {/* Stats (Desktop only) */}
+                            <div className="hidden md:flex flex-wrap gap-x-8 gap-y-4 mt-8 pt-6 border-t border-white/10">
                                 {[
                                     { val: "50K+", label: "Customers" },
                                     { val: "500+", label: "Products" },
                                     { val: "★ 4.9", label: "Rating" },
                                 ].map((s) => (
                                     <div key={s.label}>
-                                        <p className="text-white text-xl font-black">{s.val}</p>
-                                        <p className="text-white/50 text-xs mt-0.5 tracking-[1px] uppercase">{s.label}</p>
+                                        <p className="text-white text-lg font-black">{s.val}</p>
+                                        <p className="text-white/45 text-[10px] mt-0.5 tracking-[1px] uppercase">{s.label}</p>
                                     </div>
                                 ))}
                             </div>
@@ -205,11 +218,9 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Slide number indicator — premium style */}
-                <div className="absolute bottom-8 left-12 z-30 flex items-center gap-4">
-                    <span className="text-white/40 text-xs font-semibold tracking-[2px]">
-                        0{currentSlide + 1}
-                    </span>
+                {/* Desktop indicator */}
+                <div className="hidden md:flex absolute bottom-8 left-12 z-30 items-center gap-4">
+                    <span className="text-white/40 text-xs font-semibold tracking-[2px]">0{currentSlide + 1}</span>
                     <div className="flex gap-2">
                         {slides.map((_, index) => (
                             <button
@@ -219,12 +230,10 @@ export default function Home() {
                             />
                         ))}
                     </div>
-                    <span className="text-white/25 text-xs font-semibold tracking-[2px]">
-                        0{slides.length}
-                    </span>
+                    <span className="text-white/25 text-xs font-semibold tracking-[2px]">0{slides.length}</span>
                 </div>
 
-                {/* Scroll hint */}
+                {/* Scroll hint (Desktop only) */}
                 <div className="absolute bottom-8 right-10 z-30 hidden md:flex flex-col items-center gap-2">
                     <div className="w-[1px] h-10 bg-gradient-to-b from-white/0 to-white/40" />
                     <p className="text-white/40 text-[10px] tracking-[3px] uppercase rotate-90 origin-center mt-4">Scroll</p>
