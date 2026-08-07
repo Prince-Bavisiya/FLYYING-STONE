@@ -75,7 +75,7 @@ export default function Navbar() {
             setSearchLoading(true);
 
             const response = await fetch(
-                `http://localhost:5000/api/products/search?q=${encodeURIComponent(value)}`
+                `/api/products/search?q=${encodeURIComponent(value)}`
             );
 
             const data = await response.json();

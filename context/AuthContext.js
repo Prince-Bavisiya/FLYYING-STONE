@@ -11,6 +11,14 @@ import axios from "axios";
 // Automatically send cookies with all axios requests
 axios.defaults.withCredentials = true;
 
+// Intercept all requests to rewrite hardcoded localhost backend URLs to relative path /api
+axios.interceptors.request.use((config) => {
+    if (config.url && config.url.startsWith("http://localhost:5000/api")) {
+        config.url = config.url.replace("http://localhost:5000/api", "/api");
+    }
+    return config;
+});
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
