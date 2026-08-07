@@ -43,3 +43,6 @@ next-env.d.ts
 # frontend build folder/submodule duplicate
 /frontend
 
+# database backups
+*.sql
+
