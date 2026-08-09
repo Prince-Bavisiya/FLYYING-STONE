@@ -20,7 +20,7 @@ function OrderSuccessContent() {
             if (sessionId) {
                 try {
                     const token = localStorage.getItem("token");
-                    const res = await axios.get(`http://localhost:5000/api/payment/verify/${sessionId}`, {
+                    const res = await axios.get(`/api/payment/verify/${sessionId}`, {
                         headers: { authorization: token }
                     });
                     console.log("Payment verified:", res.data);

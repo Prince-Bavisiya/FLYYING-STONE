@@ -41,7 +41,7 @@ export default function Home() {
         if (token) setIsLoggedIn(true);
 
         axios
-            .get("http://localhost:5000/api/products")
+            .get("/api/products")
             .then((res) => setProducts(res.data.products))
             .catch((err) => console.log(err));
 

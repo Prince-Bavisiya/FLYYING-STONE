@@ -16,7 +16,7 @@ export default function Orders() {
                 const token = localStorage.getItem("token");
 
                 const res = await axios.get(
-                    "http://localhost:5000/api/orders",
+                    "/api/orders",
                     {
                         headers: {
                             authorization: token,

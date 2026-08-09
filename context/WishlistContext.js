@@ -23,7 +23,7 @@ export function WishlistProvider({ children }) {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:5000/api/wishlist", {
+            const res = await axios.get("/api/wishlist", {
                 headers: { authorization: token }
             });
             const items = res.data.wishlist || [];
@@ -62,7 +62,7 @@ export function WishlistProvider({ children }) {
             setWishlistItems(prev => prev.filter(item => item.product_id !== productId));
 
             try {
-                await axios.delete(`http://localhost:5000/api/wishlist/${productId}`, {
+                await axios.delete(`/api/wishlist/${productId}`, {
                     headers: { authorization: token }
                 });
             } catch (e) {
@@ -82,7 +82,7 @@ export function WishlistProvider({ children }) {
 
             try {
                 await axios.post(
-                    "http://localhost:5000/api/wishlist",
+                    "/api/wishlist",
                     { product_id: productId },
                     { headers: { authorization: token } }
                 );
@@ -100,7 +100,7 @@ export function WishlistProvider({ children }) {
         setWishlistItems(prev => prev.filter(item => item.product_id !== Number(productId)));
 
         try {
-            await axios.delete(`http://localhost:5000/api/wishlist/${productId}`, {
+            await axios.delete(`/api/wishlist/${productId}`, {
                 headers: { authorization: token }
             });
         } catch (e) {

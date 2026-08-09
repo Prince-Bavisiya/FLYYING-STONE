@@ -20,7 +20,7 @@ function PaymentSuccessContent() {
                 if (!sessionId) { setLoading(false); return; }
 
                 const token = localStorage.getItem("token");
-                await axios.get(`http://localhost:5000/api/payment/verify/${sessionId}`, {
+                await axios.get(`/api/payment/verify/${sessionId}`, {
                     headers: { authorization: token },
                 });
 

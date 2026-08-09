@@ -32,7 +32,7 @@ export default function Men() {
         const getProducts = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get("http://localhost:5000/api/products", {
+                const res = await axios.get("/api/products", {
                     headers: { authorization: token },
                 });
                 setProducts(res.data.products);

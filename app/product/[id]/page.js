@@ -25,7 +25,7 @@ export default function ProductDetails() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/api/products/${id}`)
+            .get(`/api/products/${id}`)
             .then((res) => setProduct(res.data.product))
             .catch(console.log);
     }, [id]);

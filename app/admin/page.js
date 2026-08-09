@@ -127,48 +127,48 @@ export default function Admin() {
     const headers = { authorization: token };
 
     const getStats = async () => {
-        try { const res = await axios.get("http://localhost:5000/api/admin/stats", { headers }); setStats(res.data.stats); } catch (e) { console.log(e); }
+        try { const res = await axios.get("/api/admin/stats", { headers }); setStats(res.data.stats); } catch (e) { console.log(e); }
     };
     const getProducts = async () => {
-        try { const res = await axios.get("http://localhost:5000/api/products", { headers }); setProducts(res.data.products); } catch (e) { console.log(e); }
+        try { const res = await axios.get("/api/products", { headers }); setProducts(res.data.products); } catch (e) { console.log(e); }
     };
     const getOrders = async () => {
-        try { const res = await axios.get("http://localhost:5000/api/admin/orders", { headers }); setOrders(res.data.orders); } catch (e) { console.log(e); }
+        try { const res = await axios.get("/api/admin/orders", { headers }); setOrders(res.data.orders); } catch (e) { console.log(e); }
     };
 
     // ── FIXED: removed /admin prefix to match actual backend route ──
     const getCustomers = async () => {
-        try { const res = await axios.get("http://localhost:5000/api/customers", { headers }); setCustomers(res.data.customers || []); } catch (e) { console.log(e); }
+        try { const res = await axios.get("/api/customers", { headers }); setCustomers(res.data.customers || []); } catch (e) { console.log(e); }
     };
 
     const getCoupons = async () => {
-        try { const res = await axios.get("http://localhost:5000/api/coupons/admin/coupons", { headers }); setCoupons(res.data.coupons || []); } catch (e) { console.log(e); }
+        try { const res = await axios.get("/api/coupons/admin/coupons", { headers }); setCoupons(res.data.coupons || []); } catch (e) { console.log(e); }
     };
 
     const getOrderChart = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/admin/charts/orders", { headers });
+            const res = await axios.get("/api/admin/charts/orders", { headers });
             setOrderChart(res.data.chart);
         } catch (err) { console.log(err); }
     };
 
     const getRevenueChart = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/admin/charts/revenue", { headers });
+            const res = await axios.get("/api/admin/charts/revenue", { headers });
             setRevenueChart(res.data.chart);
         } catch (err) { console.log(err); }
     };
 
     const getCategoryChart = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/admin/charts/categories", { headers });
+            const res = await axios.get("/api/admin/charts/categories", { headers });
             setCategoryData(res.data.chart);
         } catch (err) { console.log(err); }
     };
 
     const getTopProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/admin/charts/top-products", { headers });
+            const res = await axios.get("/api/admin/charts/top-products", { headers });
             setTopProducts(res.data.products);
         } catch (err) { console.log(err); }
     };
@@ -192,7 +192,7 @@ export default function Admin() {
         try {
 
             const res = await axios.post(
-                "http://localhost:5000/api/products/add",
+                "/api/products/add",
                 productForm,
                 { headers }
             );
@@ -231,7 +231,7 @@ export default function Admin() {
         try {
 
             const res = await axios.put(
-                `http://localhost:5000/api/products/${editId}`,
+                `/api/products/${editId}`,
                 productForm,
                 { headers }
             );
@@ -277,7 +277,7 @@ export default function Admin() {
         try {
 
             const res = await axios.delete(
-                `http://localhost:5000/api/products/${id}`,
+                `/api/products/${id}`,
                 { headers }
             );
 
@@ -305,10 +305,10 @@ export default function Admin() {
         router.push(`/admin/products/edit/${p.id}`);
     };
     const handleStatusChange = async (orderId, status) => {
-        try { await axios.put(`http://localhost:5000/api/admin/orders/${orderId}/status`, { status }, { headers }); getOrders(); } catch (e) { alert(e.response?.data?.message || e.message); }
+        try { await axios.put(`/api/admin/orders/${orderId}/status`, { status }, { headers }); getOrders(); } catch (e) { alert(e.response?.data?.message || e.message); }
     };
     const handleTrackingUpdate = async (orderId) => {
-        try { await axios.put(`http://localhost:5000/api/admin/orders/${orderId}/tracking`, trackingForm, { headers }); alert("Tracking updated!"); setSelectedOrder(null); getOrders(); } catch (e) { alert(e.response?.data?.message || e.message); }
+        try { await axios.put(`/api/admin/orders/${orderId}/tracking`, trackingForm, { headers }); alert("Tracking updated!"); setSelectedOrder(null); getOrders(); } catch (e) { alert(e.response?.data?.message || e.message); }
     };
 
     const emptyCouponForm = { code: "", discount_type: "flat", discount_value: "", min_order_amount: "", max_discount: "", usage_limit: "", expiry_date: "" };
@@ -316,7 +316,7 @@ export default function Admin() {
     const handleAddCoupon = async () => {
         if (!couponForm.code || !couponForm.discount_value) { alert("Coupon code and discount value are required."); return; }
         try {
-            const res = await axios.post("http://localhost:5000/api/coupons/admin/coupons", couponForm, { headers });
+            const res = await axios.post("/api/coupons/admin/coupons", couponForm, { headers });
             alert(res.data.message);
             setCouponForm(emptyCouponForm);
             getCoupons();
@@ -324,7 +324,7 @@ export default function Admin() {
     };
     const handleUpdateCoupon = async () => {
         try {
-            const res = await axios.put(`http://localhost:5000/api/coupons/admin/coupons/${editCouponId}`, couponForm, { headers });
+            const res = await axios.put(`/api/coupons/admin/coupons/${editCouponId}`, couponForm, { headers });
             alert(res.data.message);
             setEditCouponId(null);
             setCouponForm(emptyCouponForm);
@@ -332,12 +332,12 @@ export default function Admin() {
         } catch (e) { alert(e.response?.data?.message || e.message); }
     };
     const handleToggleCoupon = async (id) => {
-        try { await axios.put(`http://localhost:5000/api/coupons/admin/coupons/${id}/toggle`, {}, { headers }); getCoupons(); }
+        try { await axios.put(`/api/coupons/admin/coupons/${id}/toggle`, {}, { headers }); getCoupons(); }
         catch (e) { alert(e.response?.data?.message || e.message); }
     };
     const handleDeleteCoupon = async (id) => {
         if (!window.confirm("Delete this coupon?")) return;
-        try { const res = await axios.delete(`http://localhost:5000/api/coupons/admin/coupons/${id}`, { headers }); alert(res.data.message); getCoupons(); }
+        try { const res = await axios.delete(`/api/coupons/admin/coupons/${id}`, { headers }); alert(res.data.message); getCoupons(); }
         catch (e) { alert(e.response?.data?.message || e.message); }
     };
     const handleEditCouponClick = (c) => {

@@ -11,13 +11,6 @@ import axios from "axios";
 // Automatically send cookies with all axios requests
 axios.defaults.withCredentials = true;
 
-// Intercept all requests to rewrite hardcoded localhost backend URLs to relative path /api
-axios.interceptors.request.use((config) => {
-    if (config.url && config.url.startsWith("http://localhost:5000/api")) {
-        config.url = config.url.replace("http://localhost:5000/api", "/api");
-    }
-    return config;
-});
 
 const AuthContext = createContext();
 
@@ -31,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
         const checkSession = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/auth/me?t=${Date.now()}`);
+                const res = await axios.get(`/api/auth/me?t=${Date.now()}`);
                 if (res.data.success) {
                     setUser(res.data.user);
                     setRole(res.data.user.role);
@@ -81,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
 
         try {
-            await axios.post("http://localhost:5000/api/auth/logout");
+            await axios.post("/api/auth/logout");
         } catch (error) {
             console.error("Logout request failed", error);
         }

@@ -16,7 +16,7 @@ export default function OrderDetails() {
         const fetchOrder = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get(`http://localhost:5000/api/orders/${id}`, {
+                const res = await axios.get(`/api/orders/${id}`, {
                     headers: { authorization: token },
                 });
                 setOrder(res.data.order);

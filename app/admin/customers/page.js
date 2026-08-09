@@ -29,7 +29,7 @@ export default function CustomersPage() {
             }
 
             const res = await axios.get(
-                "http://localhost:5000/api/customers",
+                "/api/customers",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

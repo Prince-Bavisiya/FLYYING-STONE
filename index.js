@@ -24,8 +24,14 @@ const app = express();
 app.use(
     cors({
         origin: (origin, callback) => {
-            // Allow local development origins dynamically
-            if (!origin || /^http:\/\/localhost(:\d+)?$/.test(origin) || /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(origin) || /^http:\/\/192\.168\.\d+\.\d+(:\d+)?$/.test(origin)) {
+            // Allow local development origins and Vercel domains dynamically
+            if (
+                !origin || 
+                /^http:\/\/localhost(:\d+)?$/.test(origin) || 
+                /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(origin) || 
+                /^http:\/\/192\.168\.\d+\.\d+(:\d+)?$/.test(origin) ||
+                /\.vercel\.app$/.test(origin)
+            ) {
                 callback(null, true);
             } else {
                 callback(new Error("Not allowed by CORS"));

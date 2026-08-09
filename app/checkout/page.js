@@ -44,7 +44,7 @@ function CheckoutContent() {
         if (!token) return;
 
         axios.get(
-            "http://localhost:5000/api/addresses",
+            "/api/addresses",
             { headers: { Authorization: `Bearer ${token}` } }
         )
             .then((res) => {
@@ -94,7 +94,7 @@ function CheckoutContent() {
         try {
             const token = localStorage.getItem("token");
             const res = await axios.post(
-                "http://localhost:5000/api/coupons/apply",
+                "/api/coupons/apply",
                 { code: couponCode.trim(), cartTotal: totalPrice },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -133,7 +133,7 @@ function CheckoutContent() {
             const token = localStorage.getItem("token");
 
             const response = await axios.post(
-                "http://localhost:5000/api/payment/create-checkout-session",
+                "/api/payment/create-checkout-session",
                 {
                     products: checkoutProducts,
                     couponCode: appliedCoupon?.coupon?.code || null,

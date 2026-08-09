@@ -20,7 +20,7 @@ export default function EditProduct() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/products/${id}`, { headers });
+                const res = await axios.get(`/api/products/${id}`, { headers });
                 const p = res.data.product || res.data;
                 setProductForm({
                     name: p.name || "",
@@ -43,7 +43,7 @@ export default function EditProduct() {
     const handleUpdate = async () => {
         setSaving(true);
         try {
-            const res = await axios.put(`http://localhost:5000/api/products/${id}`, productForm, { headers });
+            const res = await axios.put(`/api/products/${id}`, productForm, { headers });
             alert(res.data.message || "Product updated!");
             router.push("/admin");
         } catch (e) {

@@ -58,7 +58,7 @@ function ProfileContent() {
         setOrdersLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:5000/api/orders", {
+            const res = await axios.get("/api/orders", {
                 headers: { authorization: token }
             });
             setOrders(res.data.orders || []);
@@ -77,7 +77,7 @@ function ProfileContent() {
         setAddressesLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get("http://localhost:5000/api/addresses", {
+            const res = await axios.get("/api/addresses", {
                 headers: { authorization: token }
             });
             setAddresses(res.data.addresses || []);
@@ -128,9 +128,9 @@ function ProfileContent() {
         try {
             const token = localStorage.getItem("token");
             if (editingAddressId) {
-                await axios.put(`http://localhost:5000/api/addresses/${editingAddressId}`, addressForm, { headers: { authorization: token } });
+                await axios.put(`/api/addresses/${editingAddressId}`, addressForm, { headers: { authorization: token } });
             } else {
-                await axios.post("http://localhost:5000/api/addresses", addressForm, { headers: { authorization: token } });
+                await axios.post("/api/addresses", addressForm, { headers: { authorization: token } });
             }
             await fetchAddresses();
             closeAddressForm();
@@ -144,7 +144,7 @@ function ProfileContent() {
     const handleSetPrimary = async (addressId) => {
         try {
             const token = localStorage.getItem("token");
-            await axios.put(`http://localhost:5000/api/addresses/${addressId}/set-primary`, {}, { headers: { authorization: token } });
+            await axios.put(`/api/addresses/${addressId}/set-primary`, {}, { headers: { authorization: token } });
             await fetchAddresses();
         } catch (e) { alert("Failed to set primary address."); }
     };
@@ -153,7 +153,7 @@ function ProfileContent() {
         if (!confirm("Delete this address?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://localhost:5000/api/addresses/${addressId}`, { headers: { authorization: token } });
+            await axios.delete(`/api/addresses/${addressId}`, { headers: { authorization: token } });
             await fetchAddresses();
         } catch (e) { alert("Failed to delete address."); }
     };
@@ -183,7 +183,7 @@ function ProfileContent() {
         setError("");
         setAuthLoading(true);
         try {
-            const res = await axios.post("http://localhost:5000/api/auth/login", loginData);
+            const res = await axios.post("/api/auth/login", loginData);
             localStorage.setItem("name", res.data.name || loginData.email.split("@")[0]);
             localStorage.setItem("email", loginData.email);
             login(res.data.token, res.data.role || "user");
@@ -210,7 +210,7 @@ function ProfileContent() {
         if (registerData.password !== registerData.confirm) { setError("Passwords do not match."); return; }
         setAuthLoading(true);
         try {
-            await axios.post("http://localhost:5000/api/auth/register", {
+            await axios.post("/api/auth/register", {
                 name: registerData.name, email: registerData.email, password: registerData.password,
             });
             setSuccess("Account created! Please login.");
