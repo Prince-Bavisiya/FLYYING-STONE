@@ -150,12 +150,14 @@ function CheckoutContent() {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-            if (!stripe) throw new Error("Stripe failed to load.");
-
-            const result = await stripe.redirectToCheckout({ sessionId: response.data.id });
-            if (result.error) throw new Error(result.error.message);
-
+            if (response.data.url) {
+                window.location.href = response.data.url;
+            } else {
+                const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+                if (!stripe) throw new Error("Stripe failed to load.");
+                const result = await stripe.redirectToCheckout({ sessionId: response.data.id });
+                if (result.error) throw new Error(result.error.message);
+            }
         } catch (error) {
             console.error(error);
             alert(error.response?.data?.message || error.message || "Payment Failed. Please try again.");
