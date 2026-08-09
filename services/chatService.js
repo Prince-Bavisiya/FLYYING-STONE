@@ -29,21 +29,51 @@ Operational Guidelines:
 - If a product's stock is 0, mention that it is currently out of stock and politely suggest an alternative.
 `;
 
-        const response = await ollama.chat({
-            model: process.env.OLLAMA_MODEL,
-            messages: [
-                {
-                    role: "system",
-                    content: liveSystemPrompt,
-                },
-                ...messages,
-            ],
-        });
+        if (process.env.GEMINI_API_KEY) {
+            console.log("Using Gemini API for Chatbot...");
+            
+            // Map messages to Gemini format (roles must be 'user' or 'model')
+            const contents = messages.map((m) => ({
+                role: m.role === "assistant" || m.role === "model" ? "model" : "user",
+                parts: [{ text: m.content }],
+            }));
 
-        return response.message.content;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents,
+                    systemInstruction: {
+                        parts: [{ text: liveSystemPrompt }],
+                    },
+                }),
+            });
+
+            if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Gemini API Error: ${response.status} ${errText}`);
+            }
+
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        } else {
+            console.log("Using Ollama for Chatbot...");
+            const response = await ollama.chat({
+                model: process.env.OLLAMA_MODEL,
+                messages: [
+                    {
+                        role: "system",
+                        content: liveSystemPrompt,
+                    },
+                    ...messages,
+                ],
+            });
+
+            return response.message.content;
+        }
     } catch (error) {
-        console.error("Ollama / Database Error:", error);
-
+        console.error("Chat Service Error:", error);
         throw new Error("Failed to generate AI response.");
     }
 };
