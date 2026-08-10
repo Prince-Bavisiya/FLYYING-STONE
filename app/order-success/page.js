@@ -378,35 +378,35 @@ function OrderSuccessContent() {
                 </div>
 
                 {/* ── Support ── */}
-                <div className="bg-white border border-[#E5E7EB] p-5">
+                <div className="bg-white border border-[#E5E7EB] p-5 rounded-lg">
                     <p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase mb-4">Need Help?</p>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         {[
                             { icon: "📞", label: "Call Us", value: "+91 9876543210" },
                             { icon: "✉️", label: "Email", value: "support@flyyingstone.com" },
                             { icon: "💬", label: "Live Chat", value: "Available 24/7" },
                         ].map(s => (
-                            <div key={s.label} className="bg-[#F8F9FA] border border-[#E5E7EB] p-3 text-center">
+                            <div key={s.label} className="bg-[#F8F9FA] border border-[#E5E7EB] p-3 text-center rounded-lg flex flex-col items-center justify-center">
                                 <p className="text-lg">{s.icon}</p>
                                 <p className="text-[10px] font-bold text-[#0F172A] mt-1">{s.label}</p>
-                                <p className="text-[10px] text-gray-400 mt-0.5">{s.value}</p>
+                                <p className="text-[10px] text-gray-400 mt-0.5 break-all">{s.value}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* ── Action Buttons ── */}
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <Link href="/profile"
-                        className="bg-[#FF3E6C] text-white py-3.5 text-xs font-bold tracking-widest uppercase text-center hover:bg-[#e8325c] transition">
+                        className="bg-[#FF3E6C] text-white py-3.5 text-xs font-bold tracking-widest uppercase text-center hover:bg-[#e8325c] transition rounded-lg">
                         TRACK ORDER
                     </Link>
                     <button onClick={handlePrintInvoice}
-                        className="border border-[#FF3E6C] text-[#FF3E6C] py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-[#FFF0F4] transition">
+                        className="border border-[#FF3E6C] text-[#FF3E6C] py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-[#FFF0F4] transition rounded-lg">
                         INVOICE
                     </button>
                     <Link href="/"
-                        className="bg-[#0F172A] text-white py-3.5 text-xs font-bold tracking-widest uppercase text-center hover:bg-black transition">
+                        className="bg-[#0F172A] text-white py-3.5 text-xs font-bold tracking-widest uppercase text-center hover:bg-black transition rounded-lg">
                         SHOP MORE
                     </Link>
                 </div>
