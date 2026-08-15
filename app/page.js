@@ -332,10 +332,10 @@ export default function Home() {
                         <img
                             src="/images/zayro-logo.png"
                             alt="ZAYRO"
-                            className="h-9 w-auto mx-auto object-contain"
+                            className="h-[38px] w-auto mx-auto object-contain"
                         />
 
-                        <h2 className="mt-3 text-2xl font-light tracking-[5px]">
+                        <h2 className="mt-3 text-2xl font-light tracking-[5px] leading-none">
                             ZAYRO
                         </h2>
 
