@@ -132,7 +132,15 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-[8px] flex-shrink-0 whitespace-nowrap">
-                        <Image src="/images/zayro-logo.png" alt="ZAYRO" width={51} height={28} priority />
+                        <div className="relative w-[28px] h-[28px] overflow-hidden flex items-center justify-center flex-shrink-0">
+                            <Image 
+                                src="/images/zayro-logo.png" 
+                                alt="ZAYRO Monogram" 
+                                fill 
+                                className="scale-[2.4] object-contain" 
+                                priority 
+                            />
+                        </div>
                         <span className="text-[24px] leading-none tracking-[5px] font-light">ZAYRO</span>
                     </Link>
 
@@ -356,7 +364,15 @@ export default function Navbar() {
 
                         {/* Logo + Text */}
                         <Link href="/" className="flex items-center gap-[7px]">
-                            <Image src="/images/zayro-logo.png" alt="ZAYRO" width={40} height={22} priority />
+                            <div className="relative w-[22px] h-[22px] overflow-hidden flex items-center justify-center flex-shrink-0">
+                                <Image 
+                                    src="/images/zayro-logo.png" 
+                                    alt="ZAYRO Monogram" 
+                                    fill 
+                                    className="scale-[2.4] object-contain" 
+                                    priority 
+                                />
+                            </div>
                             <span className="text-[20px] leading-none tracking-[3px] font-light text-[#0F172A] whitespace-nowrap">ZAYRO</span>
                         </Link>
                     </div>

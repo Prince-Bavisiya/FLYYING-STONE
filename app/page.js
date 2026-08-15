@@ -329,11 +329,13 @@ export default function Home() {
 
                     <div className="text-center">
 
-                        <img
-                            src="/images/zayro-logo.png"
-                            alt="ZAYRO"
-                            className="h-[38px] w-auto mx-auto object-contain"
-                        />
+                        <div className="relative w-[38px] h-[38px] overflow-hidden mx-auto flex items-center justify-center">
+                            <img
+                                src="/images/zayro-logo.png"
+                                alt="ZAYRO Monogram"
+                                className="absolute w-full h-full scale-[2.4] object-contain"
+                            />
+                        </div>
 
                         <h2 className="mt-3 text-2xl font-light tracking-[5px] leading-none">
                             ZAYRO
