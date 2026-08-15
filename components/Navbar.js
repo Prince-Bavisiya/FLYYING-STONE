@@ -131,8 +131,8 @@ export default function Navbar() {
                 <div className="max-w-[1600px] mx-auto hidden lg:grid grid-cols-[auto_1fr_auto] items-center gap-10 px-10 py-5">
 
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-[8px] flex-shrink-0 whitespace-nowrap">
-                        <div className="relative w-[28px] h-[28px] overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <Link href="/" className="flex items-center gap-[10px] flex-shrink-0 whitespace-nowrap">
+                        <div className="relative w-[34px] h-[34px] overflow-hidden flex items-center justify-center flex-shrink-0">
                             <Image 
                                 src="/images/zayro-logo.png" 
                                 alt="ZAYRO Monogram" 
@@ -363,8 +363,8 @@ export default function Navbar() {
                         </button>
 
                         {/* Logo + Text */}
-                        <Link href="/" className="flex items-center gap-[7px]">
-                            <div className="relative w-[22px] h-[22px] overflow-hidden flex items-center justify-center flex-shrink-0">
+                        <Link href="/" className="flex items-center gap-[8px]">
+                            <div className="relative w-[26px] h-[26px] overflow-hidden flex items-center justify-center flex-shrink-0">
                                 <Image 
                                     src="/images/zayro-logo.png" 
                                     alt="ZAYRO Monogram" 

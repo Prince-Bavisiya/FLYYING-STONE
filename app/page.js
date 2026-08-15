@@ -329,15 +329,16 @@ export default function Home() {
 
                     <div className="text-center">
 
-                        <div className="relative w-[38px] h-[38px] overflow-hidden mx-auto flex items-center justify-center">
+                        <div className="relative w-[44px] h-[44px] overflow-hidden mx-auto flex items-center justify-center">
                             <img
                                 src="/images/zayro-logo.png"
                                 alt="ZAYRO Monogram"
-                                className="absolute w-full h-full scale-[2.4] object-contain invert"
+                                className="absolute w-full h-full scale-[2.4] object-contain"
+                                style={{ filter: "invert(1)" }}
                             />
                         </div>
 
-                        <h2 className="mt-3 text-2xl font-light tracking-[5px] leading-none">
+                        <h2 className="mt-4 text-2xl font-light tracking-[5px] leading-none">
                             ZAYRO
                         </h2>
 
