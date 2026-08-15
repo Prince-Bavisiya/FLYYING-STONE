@@ -83,7 +83,7 @@ export default function Women() {
             <div className="border-b border-gray-200 bg-[#F9F9F7]">
                 <div className="max-w-screen-xl mx-auto px-6 md:px-10 pt-16 pb-10">
                     <p className="text-[10px] tracking-[4px] text-[#D4AF37] uppercase mb-3 font-medium">
-                        Flyying Stone
+                        ZAYRO
                     </p>
                     <div className="flex items-end justify-between gap-6 flex-wrap">
                         <div>

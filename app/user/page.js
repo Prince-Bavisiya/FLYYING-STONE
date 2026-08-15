@@ -37,13 +37,7 @@ export default function UserPage() {
 
                         <h1 className="text-5xl xl:text-6xl font-extralight tracking-[12px] text-white leading-none">
 
-                            FLYYING
-
-                        </h1>
-
-                        <h1 className="text-6xl font-extralight tracking-[12px] text-white mt-3 leading-none">
-
-                            STONE
+                            ZAYRO
 
                         </h1>
 
@@ -86,7 +80,7 @@ export default function UserPage() {
 
                         <p className="text-center text-white tracking-[6px] text-base font-light">
 
-                            FLYYING STONE
+                            ZAYRO
 
                         </p>
 

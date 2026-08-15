@@ -321,7 +321,7 @@ export default function Home() {
 
                         <div>
                             <h2 className="uppercase tracking-[8px] text-4xl font-light" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                                FLYYING STONE
+                                ZAYRO
                             </h2>
                             <div className="w-14 h-[2px] bg-red-500 mt-6 mb-8"></div>
                             <p className="text-white/60 leading-8 text-[16px]">
@@ -379,7 +379,7 @@ export default function Home() {
                     </div>
 
                     <div className="border-t border-white/10 mt-20 pt-8 flex flex-col lg:flex-row justify-between items-center gap-8">
-                        <p className="text-white/40 text-sm">© 2026 <span className="text-white">FLYYING STONE</span>. All Rights Reserved.</p>
+                        <p className="text-white/40 text-sm">© 2026 <span className="text-white">ZAYRO</span>. All Rights Reserved.</p>
                         <div className="flex flex-wrap gap-3">
                             {["VISA", "MasterCard", "AMEX", "UPI", "Apple Pay"].map((card) => (
                                 <div key={card} className="bg-[#111] px-5 py-3 rounded-lg text-sm">{card}</div>

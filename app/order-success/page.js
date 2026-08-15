@@ -71,7 +71,7 @@ function OrderSuccessContent() {
         printWindow.document.write(`
             <html>
             <head>
-                <title>Invoice - Flyying Stone #${order?.id}</title>
+                <title>Invoice - ZAYRO #${order?.id}</title>
                 <style>
                     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
                     body { padding: 40px; color: #0F172A; }
@@ -95,7 +95,7 @@ function OrderSuccessContent() {
             <body>
                 <div class="header">
                     <div>
-                        <div class="brand">FLYYING STONE</div>
+                        <div class="brand">ZAYRO</div>
                         <div class="brand-sub">PREMIUM FASHION</div>
                     </div>
                     <div style="text-align:right">
@@ -175,7 +175,7 @@ function OrderSuccessContent() {
                 </div>
 
                 <div class="footer">
-                    Thank you for shopping with Flyying Stone · support@flyyingstone.com · +91 9876543210<br/>
+                    Thank you for shopping with ZAYRO · support@zayro.com · +91 9876543210<br/>
                     This is a computer generated invoice. No signature required.
                 </div>
             </body>
@@ -229,7 +229,7 @@ function OrderSuccessContent() {
                     </div>
                     <p className="text-[10px] text-green-600 font-bold tracking-widest uppercase mb-1">Payment Successful</p>
                     <h1 className="text-xl font-black text-[#0F172A]">Order Placed Successfully!</h1>
-                    <p className="text-xs text-gray-400 mt-1">Thank you for shopping with Flyying Stone</p>
+                    <p className="text-xs text-gray-400 mt-1">Thank you for shopping with ZAYRO</p>
 
                     <div className="grid grid-cols-3 gap-3 mt-5">
                         {[
@@ -383,7 +383,7 @@ function OrderSuccessContent() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         {[
                             { icon: "📞", label: "Call Us", value: "+91 9876543210" },
-                            { icon: "✉️", label: "Email", value: "support@flyyingstone.com" },
+                            { icon: "✉️", label: "Email", value: "support@zayro.com" },
                             { icon: "💬", label: "Live Chat", value: "Available 24/7" },
                         ].map(s => (
                             <div key={s.label} className="bg-[#F8F9FA] border border-[#E5E7EB] p-3 text-center rounded-lg flex flex-col items-center justify-center">

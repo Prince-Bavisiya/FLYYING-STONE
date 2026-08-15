@@ -26,7 +26,7 @@ export default function BackButton() {
           href="/"
           className="text-[10px] tracking-[4px] text-gray-400 hover:text-[#FF3E6C] uppercase font-medium transition-colors"
         >
-          Flyying Stone
+          ZAYRO
         </Link>
       </div>
     </div>

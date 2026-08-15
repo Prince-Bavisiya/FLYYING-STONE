@@ -330,13 +330,13 @@ export default function Home() {
                     <div className="text-center">
 
                         <img
-                            src="/images/logo.png"
-                            alt="Flyying Stone"
+                            src="/images/zayro-logo.png"
+                            alt="ZAYRO"
                             className="w-20 h-20 mx-auto object-contain"
                         />
 
                         <h2 className="mt-6 text-4xl font-light tracking-[10px]">
-                            FLYYING STONE
+                            ZAYRO
                         </h2>
 
                         <div className="w-16 h-1 bg-[#FF3F6C] mx-auto mt-6 rounded-full"></div>
@@ -347,12 +347,12 @@ export default function Home() {
                         </p>
 
                         <p className="mt-4 text-white/60">
-                            support@flyyingstone.com
+                            support@zayro.com
                         </p>
 
                         <div className="mt-10 border-t border-white/10 pt-6">
                             <p className="text-white/50 text-sm">
-                                © 2026 Flyying Stone. All Rights Reserved.
+                                © 2026 ZAYRO. All Rights Reserved.
                             </p>
                         </div>
 

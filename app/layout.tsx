@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Flyying Stone",
+  title: "ZAYRO",
   description: "Premium Fashion Store",
 };
 

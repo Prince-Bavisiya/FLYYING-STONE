@@ -241,7 +241,7 @@ function ProfileContent() {
             <div className="min-h-screen bg-[#F8F9FA]">
                 <div className="max-w-lg mx-auto px-4 py-16">
                     <div className="text-center mb-8">
-                        <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">Welcome to Flyying Stone</h1>
+                        <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">Welcome to ZAYRO</h1>
                         <p className="text-gray-500 text-sm mt-2">Sign in to access your account</p>
                     </div>
 

@@ -121,7 +121,7 @@ export default function Admin() {
     });
     const [couponSearch, setCouponSearch] = useState("");
 
-    const [settings, setSettings] = useState({ storeName: "Flyying Stone", email: "", phone: "", address: "" });
+    const [settings, setSettings] = useState({ storeName: "ZAYRO", email: "", phone: "", address: "" });
 
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
     const headers = { authorization: token };
@@ -512,9 +512,9 @@ export default function Admin() {
             <div className="w-72 bg-[#0F172A] text-white min-h-screen flex flex-col shadow-2xl fixed left-0 top-0 bottom-0 z-40">
                 <div className="px-6 py-6 border-b border-white/10">
                     <div className="flex items-center gap-3">
-                        <img src="/images/logo.png" alt="Logo" className="w-10 h-10 rounded-lg object-cover" />
+                        <img src="/images/zayro-logo.png" alt="ZAYRO Logo" className="h-10 w-auto object-contain" />
                         <div>
-                            <h1 className="text-sm font-light tracking-[5px]">FLYYING STONE</h1>
+                            <h1 className="text-sm font-light tracking-[5px]">ZAYRO</h1>
                             <p className="text-[#D4AF37] text-[10px] tracking-[3px] mt-1">ADMIN PANEL</p>
                         </div>
                     </div>

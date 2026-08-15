@@ -61,7 +61,7 @@ function LoginContent() {
 
             <Image
                 src="/images/store2.png"
-                alt="Flyying Stone"
+                alt="ZAYRO"
                 fill
                 priority
                 className="object-cover"
@@ -76,7 +76,7 @@ function LoginContent() {
                     <div className="text-center mb-8">
 
                         <h1 className="text-white text-5xl font-light tracking-[10px]">
-                            FLYYING STONE
+                            ZAYRO
                         </h1>
 
                         <p className="text-gray-300 mt-4">

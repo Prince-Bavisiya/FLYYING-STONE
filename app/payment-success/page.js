@@ -96,7 +96,7 @@ function PaymentSuccessContent() {
                 <p className="text-[10px] text-green-600 font-bold tracking-widest uppercase mb-2">Payment Confirmed</p>
                 <h1 className="text-xl font-black text-[#0F172A]">Order Placed!</h1>
                 <p className="text-xs text-gray-400 mt-2 leading-5">
-                    Thank you for shopping with Flyying Stone.<br />
+                    Thank you for shopping with ZAYRO.<br />
                     Your order has been confirmed successfully.
                 </p>
 

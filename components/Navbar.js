@@ -132,8 +132,8 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-4 flex-shrink-0 whitespace-nowrap">
-                        <Image src="/images/logo.png" alt="Flyying Stone" width={50} height={50} />
-                        <span className="text-2xl tracking-[10px] font-light">FLYYING STONE</span>
+                        <Image src="/images/zayro-logo.png" alt="ZAYRO" width={92} height={50} />
+                        <span className="text-2xl tracking-[10px] font-light">ZAYRO</span>
                     </Link>
 
                     {/* SEARCH */}
@@ -356,8 +356,8 @@ export default function Navbar() {
 
                         {/* Logo + Text */}
                         <Link href="/" className="flex items-center gap-2">
-                            <Image src="/images/logo.png" alt="Flyying Stone" width={34} height={34} />
-                            <span className="text-sm font-black tracking-[1.5px] text-[#0F172A] whitespace-nowrap">FLYYING STONE</span>
+                            <Image src="/images/zayro-logo.png" alt="ZAYRO" width={62} height={34} />
+                            <span className="text-sm font-black tracking-[1.5px] text-[#0F172A] whitespace-nowrap">ZAYRO</span>
                         </Link>
                     </div>
 

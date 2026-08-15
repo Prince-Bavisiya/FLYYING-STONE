@@ -15,7 +15,7 @@ export default function ChatBot() {
         {
             role: "assistant",
             content:
-                "👋 Welcome to FLYYING STONE! I'm your AI Fashion Assistant. Ask me anything about outfits, trends, or fashion recommendations!",
+                "👋 Welcome to ZAYRO! I'm your AI Fashion Assistant. Ask me anything about outfits, trends, or fashion recommendations!",
         },
     ]);
 
@@ -119,13 +119,13 @@ export default function ChatBot() {
                     <div className="flex items-center gap-3">
                         <div className="relative">
                             <div className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center text-xs font-bold border border-neutral-800 text-white">
-                                FS
+                                ZY
                             </div>
                             <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-black animate-pulse"></span>
                         </div>
                         <div>
                             <h2 className="text-sm font-semibold tracking-wide">
-                                FLYYING STONE AI
+                                ZAYRO AI
                             </h2>
                             <p className="text-[11px] text-gray-400">
                                 Personal Fashion Assistant
