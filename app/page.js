@@ -333,7 +333,7 @@ export default function Home() {
                             <img
                                 src="/images/zayro-logo.png"
                                 alt="ZAYRO Monogram"
-                                className="absolute w-full h-full scale-[2.4] object-contain"
+                                className="absolute w-full h-full scale-[2.4] object-contain invert"
                             />
                         </div>
 
