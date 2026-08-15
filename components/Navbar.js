@@ -131,9 +131,9 @@ export default function Navbar() {
                 <div className="max-w-[1600px] mx-auto hidden lg:grid grid-cols-[auto_1fr_auto] items-center gap-10 px-10 py-5">
 
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-4 flex-shrink-0 whitespace-nowrap">
-                        <Image src="/images/zayro-logo.png" alt="ZAYRO" width={92} height={50} />
-                        <span className="text-2xl tracking-[10px] font-light">ZAYRO</span>
+                    <Link href="/" className="flex items-center gap-[14px] flex-shrink-0 whitespace-nowrap">
+                        <Image src="/images/zayro-logo.png" alt="ZAYRO" width={55} height={30} priority />
+                        <span className="text-[26px] tracking-[6px] font-light">ZAYRO</span>
                     </Link>
 
                     {/* SEARCH */}
@@ -355,9 +355,9 @@ export default function Navbar() {
                         </button>
 
                         {/* Logo + Text */}
-                        <Link href="/" className="flex items-center gap-2">
-                            <Image src="/images/zayro-logo.png" alt="ZAYRO" width={62} height={34} />
-                            <span className="text-sm font-black tracking-[1.5px] text-[#0F172A] whitespace-nowrap">ZAYRO</span>
+                        <Link href="/" className="flex items-center gap-[10px]">
+                            <Image src="/images/zayro-logo.png" alt="ZAYRO" width={44} height={24} priority />
+                            <span className="text-[21px] font-light tracking-[4px] text-[#0F172A] whitespace-nowrap">ZAYRO</span>
                         </Link>
                     </div>
 
