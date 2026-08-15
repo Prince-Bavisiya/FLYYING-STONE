@@ -9,7 +9,7 @@ export default function ChatMessage({ role, content }) {
         >
             {!isUser && (
                 <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-[10px] font-bold tracking-wider select-none flex-shrink-0 border border-gray-800">
-                    FS
+                    ZY
                 </div>
             )}
             <div

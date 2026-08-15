@@ -339,7 +339,7 @@ export default function Home() {
                             ZAYRO
                         </h2>
 
-                        <div className="w-16 h-1 bg-[#FF3F6C] mx-auto mt-6 rounded-full"></div>
+                        <div className="w-12 h-[1px] bg-white/20 mx-auto mt-6"></div>
 
                         <p className="mt-8 text-lg text-white/70 max-w-xl mx-auto leading-8">
                             Premium fashion brand delivering timeless style

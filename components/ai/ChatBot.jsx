@@ -157,7 +157,7 @@ export default function ChatBot() {
                     {isLoading && (
                         <div className="flex items-end gap-2">
                             <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-[10px] font-bold tracking-wider select-none flex-shrink-0 border border-gray-800">
-                                FS
+                                ZY
                             </div>
                             <div className="bg-gray-100 text-gray-900 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm border border-gray-200 flex items-center gap-1.5">
                                 <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
