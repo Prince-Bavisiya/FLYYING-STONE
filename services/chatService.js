@@ -18,11 +18,15 @@ const generateWithOllama = async (modelName, sanitizedHistory, liveSystemPrompt)
     return response.message.content;
 };
 
+const { GoogleGenAI } = require("@google/genai");
+
 const generateWithGemini = async (modelName, sanitizedHistory, liveSystemPrompt) => {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
         throw new Error("GEMINI_API_KEY is not configured in environment variables.");
     }
+
+    const ai = new GoogleGenAI({ apiKey });
 
     const contents = sanitizedHistory.map((msg) => {
         const geminiRole = msg.role === "assistant" ? "model" : "user";
@@ -32,38 +36,15 @@ const generateWithGemini = async (modelName, sanitizedHistory, liveSystemPrompt)
         };
     });
 
-    const requestBody = {
+    const response = await ai.models.generateContent({
+        model: modelName,
         contents: contents,
-        systemInstruction: {
-            parts: [{ text: liveSystemPrompt }]
+        config: {
+            systemInstruction: liveSystemPrompt
         }
-    };
-
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
-
-    const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(requestBody)
     });
 
-    if (!response.ok) {
-        const errorText = await response.text();
-        let parsedError;
-        try {
-            parsedError = JSON.parse(errorText);
-        } catch (e) {}
-        const errorMsg = parsedError?.error?.message || errorText || `HTTP status ${response.status}`;
-        const err = new Error(errorMsg);
-        err.status = response.status;
-        err.responseBody = parsedError;
-        throw err;
-    }
-
-    const responseData = await response.json();
-    const reply = responseData?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const reply = response.text;
     if (!reply) {
         throw new Error("Empty response received from Gemini API.");
     }
