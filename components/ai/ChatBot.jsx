@@ -40,20 +40,27 @@ export default function ChatBot() {
     }, [messages, isLoading, isOpen]);
 
     const handleSendMessage = async () => {
-        if (!message.trim()) return;
-
+        if (!message.trim() || isLoading) return;
+ 
         const userMessage = { role: "user", content: message.trim() };
         const newMessages = [...messages, userMessage];
-
+ 
         setMessages(newMessages);
         setMessage("");
         setIsLoading(true);
-
+ 
+        const reqId = `client_req_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+        console.log(`[ChatBot] Sending message. Client Request ID: ${reqId}`);
+ 
         try {
             const response = await axios.post("/api/chat", {
                 messages: newMessages,
+            }, {
+                headers: {
+                    "x-client-request-id": reqId,
+                }
             });
-
+ 
             if (response.data.success && response.data.data?.reply) {
                 setMessages((prev) => [
                     ...prev,
@@ -64,12 +71,21 @@ export default function ChatBot() {
             }
         } catch (error) {
             console.error("Failed to fetch response:", error);
+            const serverError = error.response?.data?.message || error.message || "";
+            
+            const isLocal = typeof window !== "undefined" && 
+                (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+            const providerName = isLocal ? "Ollama" : "Gemini";
+
+            const displayError = serverError 
+                ? `⚠️ Sorry, I could not connect to the AI model. (Details: ${serverError})`
+                : `⚠️ Sorry, I could not connect to ${providerName}. Please verify the ${providerName} service is available and try again.`;
+
             setMessages((prev) => [
                 ...prev,
                 {
                     role: "assistant",
-                    content:
-                        "⚠️ Sorry, I could not connect to the AI model. Please verify Ollama is running and has the model pulled, then try again.",
+                    content: displayError,
                 },
             ]);
         } finally {

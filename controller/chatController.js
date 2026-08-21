@@ -7,6 +7,9 @@ const {
 
 const chatWithAI = async (req, res) => {
     try {
+        const clientReqId = req.headers["x-client-request-id"] || "N/A";
+        console.log(`[ChatController] Received request with Client ID: ${clientReqId}`);
+
         // Validate request
         const validation = chatSchema.safeParse(req.body);
 
@@ -35,7 +38,7 @@ const chatWithAI = async (req, res) => {
 
         return errorResponse(
             res,
-            "Failed to generate AI response.",
+            error.message || "Failed to generate AI response.",
             500
         );
     }
