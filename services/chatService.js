@@ -187,6 +187,15 @@ Operational Guidelines:
 - If a product's stock is 0, mention that it is currently out of stock and politely suggest an alternative.
 `;
 
+        // SAFE diagnostic logs for production (placed before validation to ensure logging on error)
+        const envName = process.env.NODE_ENV || "development";
+        console.log(`\n[AI Diagnostics]`);
+        console.log(`Environment: ${envName}`);
+        console.log(`AI_PROVIDER loaded: ${process.env.AI_PROVIDER ? "YES" : "NO"}`);
+        console.log(`AI_PROVIDER value: ${process.env.AI_PROVIDER || "undefined"}`);
+        console.log(`GEMINI_API_KEY loaded: ${process.env.GEMINI_API_KEY ? "YES" : "NO"}`);
+        console.log(`GEMINI_MODEL loaded: ${process.env.GEMINI_MODEL ? "YES" : "NO"}`);
+
         const provider = (process.env.AI_PROVIDER || "").toLowerCase().trim();
         if (!provider) {
             throw new Error("AI provider is not configured. Please set the AI_PROVIDER environment variable to 'gemini' or 'ollama'.");
@@ -198,16 +207,6 @@ Operational Guidelines:
         const modelName = provider === "gemini"
             ? (process.env.GEMINI_MODEL || "gemini-3.6-flash")
             : (process.env.OLLAMA_MODEL || "qwen2.5:3b");
-
-        // SAFE diagnostic logs for production
-        const hasGeminiKey = process.env.GEMINI_API_KEY ? "YES" : "NO";
-        const envName = process.env.NODE_ENV || "development";
-        
-        console.log(`\n[AI Diagnostics]`);
-        console.log(`AI Provider: ${provider}`);
-        console.log(`Environment: ${envName}`);
-        console.log(`Gemini key loaded: ${hasGeminiKey}`);
-        console.log(`Gemini model: ${process.env.GEMINI_MODEL || "N/A"}`);
 
         requestCounter++;
         const currentReqNum = requestCounter;
