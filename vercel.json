@@ -4,5 +4,6 @@
       "src": "/api/(.*)",
       "dest": "/api"
     }
-  ]
+  ],
+  "outputDirectory": "frontend/.next"
 }
