@@ -154,16 +154,14 @@ const createCheckoutSession = async (req, res) => {
 
             // Minimum Order
             if (
-
-                coupon.minimum_amount &&
-                originalTotal < Number(coupon.minimum_amount)
-
+                coupon.min_order_amount &&
+                originalTotal < Number(coupon.min_order_amount)
             ) {
 
                 return res.status(400).json({
 
                     success: false,
-                    message: `Minimum order ₹${coupon.minimum_amount}`
+                    message: `Minimum order ₹${coupon.min_order_amount}`
 
                 });
 
@@ -474,7 +472,7 @@ const verifyPayment = async (req, res) => {
 
         const { sessionId } = req.params;
 
-        // ✅ expand add kiya — payment_intent object milega
+        // Retrieve checkout session and expand the payment_intent
         const session = await stripe.checkout.sessions.retrieve(sessionId, {
             expand: ["payment_intent"]
         });
@@ -486,7 +484,7 @@ const verifyPayment = async (req, res) => {
             });
         }
 
-        // ✅ .id se actual string ID lo — expand ke baad object aata hai
+        // Extract the actual string ID (expansion turns it into an object)
         const paymentIntentId = session.payment_intent?.id || session.payment_intent;
 
         console.log("Payment Intent ID:", paymentIntentId);

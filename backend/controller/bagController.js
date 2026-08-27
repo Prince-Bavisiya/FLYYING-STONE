@@ -179,6 +179,13 @@ const decreaseQuantity = (req, res) => {
                 });
             }
 
+            if (!result || result.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Bag item not found"
+                });
+            }
+
             if (result[0].quantity <= 1) {
 
                 connection.query(

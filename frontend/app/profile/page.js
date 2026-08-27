@@ -42,18 +42,6 @@ function ProfileContent() {
     // Wishlist move-to-bag animation
     const [movingToBag, setMovingToBag] = useState(null);
 
-    useEffect(() => {
-        if (role) {
-            setUser({
-                name: localStorage.getItem("name") || "User",
-                email: localStorage.getItem("email") || "",
-                phone: localStorage.getItem("phone") || "",
-            });
-            fetchOrders();
-            fetchAddresses();
-        }
-    }, [role]);
-
     const fetchOrders = async () => {
         setOrdersLoading(true);
         try {
@@ -87,6 +75,18 @@ function ProfileContent() {
             setAddressesLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (role) {
+            setUser({
+                name: localStorage.getItem("name") || "User",
+                email: localStorage.getItem("email") || "",
+                phone: localStorage.getItem("phone") || "",
+            });
+            fetchOrders();
+            fetchAddresses();
+        }
+    }, [role]);
 
     const resetAddressForm = () => {
         setAddressForm({ fullName: "", phone: "", address: "", city: "", pincode: "", isPrimary: false });

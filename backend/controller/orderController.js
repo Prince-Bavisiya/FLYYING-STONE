@@ -159,85 +159,8 @@ connection.query(
 
 };
 
-// ===============================
-// Admin - Get All Orders
-// ===============================
-
-const getAllOrders = (req, res) => {
-
-    
-const sql = `
-    SELECT *
-        FROM orders
-    ORDER BY created_at DESC
-        `;
-
-connection.query(sql, (err, results) => {
-
-    if (err) {
-
-        return res.status(500).json({
-            success: false,
-            message: err.message
-        });
-
-    }
-
-    return res.status(200).json({
-        success: true,
-        orders: results
-    });
-
-});
-
-
-};
-
-// ===============================
-// Admin - Update Order Status
-// ===============================
-
-const updateOrderStatus = (req, res) => {
-
-    
-const orderId = req.params.id;
-const { order_status } = req.body;
-
-const sql = `
-    UPDATE orders
-    SET order_status = ?
-        WHERE id = ?
-            `;
-
-connection.query(
-    sql,
-    [order_status, orderId],
-    (err) => {
-
-        if (err) {
-
-            return res.status(500).json({
-                success: false,
-                message: err.message
-            });
-
-        }
-
-        return res.status(200).json({
-            success: true,
-            message: "Order Status Updated"
-        });
-
-    }
-);
-
-
-};
-
 module.exports = {
     getLastAddress,
     getUserOrders,
-    getOrderDetails,
-    getAllOrders,
-    updateOrderStatus
+    getOrderDetails
 };

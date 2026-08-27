@@ -9,10 +9,6 @@ export default function CustomersPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        fetchCustomers();
-    }, []);
-
     const fetchCustomers = async () => {
 
         try {
@@ -70,6 +66,10 @@ export default function CustomersPage() {
         }
 
     };
+
+    useEffect(() => {
+        fetchCustomers();
+    }, []);
 
     if (loading) {
         return <h2 className="p-10">Loading...</h2>;

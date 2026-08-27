@@ -1,13 +1,11 @@
 // controllers/couponController.js
-const db = require("../config/db").promise;  // 👈 apne project ke hisaab se path adjust kar lena
-// agar tumhare project me "const pool = require('../db')" hai to usi naam se rakh lena,
-// bas neeche jahan "db.query" likha hai wahi naam use hoga.
+const db = require("../config/db").promise;
 
 // ─────────────────────────────────────────────
 // 1. CREATE COUPON (Admin)
 // POST /api/admin/coupons
 // ─────────────────────────────────────────────
-exports.createCoupon = async (req, res) => {
+const createCoupon = async (req, res) => {
     try {
         const {
             code,
@@ -60,7 +58,7 @@ exports.createCoupon = async (req, res) => {
 // 2. GET ALL COUPONS (Admin)
 // GET /api/admin/coupons
 // ─────────────────────────────────────────────
-exports.getCoupons = async (req, res) => {
+const getCoupons = async (req, res) => {
     try {
         const [coupons] = await db.query("SELECT * FROM coupons ORDER BY created_at DESC");
         return res.json({ coupons });
@@ -74,7 +72,7 @@ exports.getCoupons = async (req, res) => {
 // 3. UPDATE COUPON (Admin)
 // PUT /api/admin/coupons/:id
 // ─────────────────────────────────────────────
-exports.updateCoupon = async (req, res) => {
+const updateCoupon = async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -123,7 +121,7 @@ exports.updateCoupon = async (req, res) => {
 // 4. TOGGLE ACTIVE/INACTIVE (Admin) — quick enable/disable
 // PUT /api/admin/coupons/:id/toggle
 // ─────────────────────────────────────────────
-exports.toggleCoupon = async (req, res) => {
+const toggleCoupon = async (req, res) => {
     try {
         const { id } = req.params;
         const [rows] = await db.query("SELECT is_active FROM coupons WHERE id = ?", [id]);
@@ -143,7 +141,7 @@ exports.toggleCoupon = async (req, res) => {
 // 5. DELETE COUPON (Admin)
 // DELETE /api/admin/coupons/:id
 // ─────────────────────────────────────────────
-exports.deleteCoupon = async (req, res) => {
+const deleteCoupon = async (req, res) => {
     try {
         const { id } = req.params;
         const [result] = await db.query("DELETE FROM coupons WHERE id = ?", [id]);
@@ -162,7 +160,7 @@ exports.deleteCoupon = async (req, res) => {
 // POST /api/coupons/apply
 // body: { code: "SAVE100", cartTotal: 1499 }
 // ─────────────────────────────────────────────
-exports.applyCoupon = async (req, res) => {
+const applyCoupon = async (req, res) => {
     try {
         const { code, cartTotal } = req.body;
 
@@ -248,7 +246,7 @@ exports.applyCoupon = async (req, res) => {
 //   const { incrementCouponUsage } = require("../controllers/couponController");
 //   await incrementCouponUsage(couponCode);
 // ─────────────────────────────────────────────
-exports.incrementCouponUsage = async (code) => {
+const incrementCouponUsage = async (code) => {
     if (!code) return;
     try {
         await db.query(
@@ -258,4 +256,14 @@ exports.incrementCouponUsage = async (code) => {
     } catch (err) {
         console.error("incrementCouponUsage error:", err);
     }
+};
+
+module.exports = {
+    createCoupon,
+    getCoupons,
+    updateCoupon,
+    toggleCoupon,
+    deleteCoupon,
+    applyCoupon,
+    incrementCouponUsage
 };
