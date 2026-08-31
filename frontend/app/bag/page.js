@@ -234,7 +234,7 @@ export default function Bag() {
                         </button>
 
                         {/* Trust Badges */}
-                        <div className="bg-white border border-[#E5E7EB] p-4">
+                         <div className="bg-white border border-[#E5E7EB] p-4">
                             <div className="grid grid-cols-3 gap-3 text-center">
                                 {[
                                     { icon: "🔒", text: "Secure Payment" },

@@ -184,18 +184,21 @@ function ProfileContent() {
         setAuthLoading(true);
         try {
             const res = await axios.post("/api/auth/login", loginData);
-            localStorage.setItem("name", res.data.name || loginData.email.split("@")[0]);
+            const userRole = res.data.role || res.data.user?.role || "user";
+            const userName = res.data.user?.name || res.data.name || loginData.email.split("@")[0];
+
+            localStorage.setItem("name", userName);
             localStorage.setItem("email", loginData.email);
-            login(res.data.token, res.data.role || "user");
+            login(res.data.token, userRole, res.data.user);
 
-            const redirect = searchParams.get("redirect"); // ✅ now works correctly
+            const redirect = searchParams.get("redirect");
 
-            if ((res.data.role || "user") === "admin") {
-                router.push("/admin");
+            if (userRole === "admin") {
+                window.location.href = "/admin";
             } else if (redirect) {
-                router.push(redirect); // ✅ e.g. /checkout when coming from bag
+                router.push(redirect);
             } else {
-                router.push("/"); // ✅ normal profile login → home
+                router.push("/");
             }
         } catch (err) {
             setError(err.response?.data?.message || "Invalid email or password.");

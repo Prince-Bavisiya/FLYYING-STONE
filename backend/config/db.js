@@ -8,8 +8,10 @@ const dbConfig = {
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "ecommerce",
     waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+    connectionLimit: process.env.DB_CONNECTION_LIMIT ? parseInt(process.env.DB_CONNECTION_LIMIT, 10) : 2,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
 };
 
 // Check if Aiven MySQL or custom SSL mode is requested

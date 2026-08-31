@@ -35,12 +35,13 @@ function LoginContent() {
             //     res.data.role
             // );
 
-            login(res.data.token, res.data.role || "user", res.data.user);
+            const userRole = res.data.role || res.data.user?.role || "user";
+            login(res.data.token, userRole, res.data.user);
 
             const redirect = searchParams.get("redirect");
 
-            if ((res.data.role || "user") === "admin") {
-                router.push("/admin");
+            if (userRole === "admin") {
+                window.location.href = "/admin";
             } else {
                 router.push(redirect || "/");
             }
