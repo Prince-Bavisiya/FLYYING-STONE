@@ -8,9 +8,9 @@ const dbConfig = {
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "ecommerce",
     waitForConnections: true,
-    connectionLimit: process.env.DB_CONNECTION_LIMIT ? parseInt(process.env.DB_CONNECTION_LIMIT, 10) : 2,
-    maxIdle: 2,
-    idleTimeout: 30000,
+    connectionLimit: process.env.DB_CONNECTION_LIMIT ? parseInt(process.env.DB_CONNECTION_LIMIT, 10) : 1,
+    maxIdle: 1,
+    idleTimeout: 10000,
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0
@@ -23,9 +23,13 @@ if (process.env.DB_SSL === "true" || (dbConfig.host && dbConfig.host.includes("a
     };
 }
 
-const pool = mysql.createPool(dbConfig);
+// Global Singleton Pool pattern for Node.js / Vercel Serverless runtimes
+if (!global.__mysqlPool) {
+    global.__mysqlPool = mysql.createPool(dbConfig);
+    console.log(`[DB SINGLETON] Initialized shared MySQL pool (host: ${dbConfig.host}:${dbConfig.port}, limit: ${dbConfig.connectionLimit})`);
+}
 
-console.log(`Database Pool Connected to ${dbConfig.host}:${dbConfig.port}`);
+const pool = global.__mysqlPool;
 
 module.exports = pool;              // ✅ callback wale controllers ke liye
 module.exports.promise = pool.promise(); // ✅ async/await wale controllers ke liye
