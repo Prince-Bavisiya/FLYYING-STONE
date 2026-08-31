@@ -59,19 +59,18 @@ app.use("/api/chat", chatRoutes);
 
 app.get("/api/health", (req, res) => {
     const db = require("./config/db");
-    db.query("SELECT 1", (err, results) => {
+    db.query("SELECT 1 as ping", (err, results) => {
         if (err) {
-            return res.status(500).json({
-                status: "error",
-                message: "Database connection failed",
-                error: err.message,
-                dbHost: process.env.DB_HOST ? `${process.env.DB_HOST.slice(0, 10)}...` : "not set (falls back to localhost)"
+            return res.status(503).json({
+                status: "DOWN",
+                database: "DISCONNECTED",
+                timestamp: new Date().toISOString()
             });
         }
         res.json({
-            status: "ok",
-            message: "Database connection healthy",
-            dbHost: process.env.DB_HOST ? `${process.env.DB_HOST.slice(0, 10)}...` : "not set"
+            status: "UP",
+            database: "CONNECTED",
+            timestamp: new Date().toISOString()
         });
     });
 });
