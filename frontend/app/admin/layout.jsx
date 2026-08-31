@@ -2,22 +2,52 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function AdminLayout({ children }) {
     const router = useRouter();
     const [status, setStatus] = useState("checking"); // checking | allowed | denied
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        const role = localStorage.getItem("role");
+        let isMounted = true;
 
-        if (!token || role !== "admin") {
-            setStatus("denied");
-            router.replace("/");
-            return;
-        }
+        const verifyAdminStatus = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-        setStatus("allowed");
+                const res = await axios.get("/api/auth/verify-admin", {
+                    headers,
+                    withCredentials: true
+                });
+
+                if (isMounted) {
+                    if (res.data.success && res.data.isAdmin) {
+                        setStatus("allowed");
+                    } else {
+                        setStatus("denied");
+                        router.replace("/");
+                    }
+                }
+            } catch (error) {
+                if (isMounted) {
+                    setStatus("denied");
+                    if (error.response?.status === 403) {
+                        // Authenticated user but not admin -> redirect to home customer site
+                        router.replace("/");
+                    } else {
+                        // Unauthenticated or invalid token -> redirect to profile login
+                        router.replace("/profile");
+                    }
+                }
+            }
+        };
+
+        verifyAdminStatus();
+
+        return () => {
+            isMounted = false;
+        };
     }, [router]);
 
     if (status === "checking") {

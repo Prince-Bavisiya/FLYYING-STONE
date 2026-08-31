@@ -9,6 +9,8 @@ const dbConfig = {
     database: process.env.DB_NAME || "ecommerce",
     waitForConnections: true,
     connectionLimit: process.env.DB_CONNECTION_LIMIT ? parseInt(process.env.DB_CONNECTION_LIMIT, 10) : 2,
+    maxIdle: 2,
+    idleTimeout: 30000,
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0

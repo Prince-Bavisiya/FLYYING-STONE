@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const connection = require("../config/db");
 
 const authMiddleware = (req, res, next) => {
 
@@ -37,7 +38,7 @@ const authMiddleware = (req, res, next) => {
         console.log("Blocking invalid/expired token request to:", req.originalUrl);
         return res.status(401).json({
             success: false,
-            message: "Invalid Token"
+            message: "Invalid or Expired Token"
         });
 
     }
@@ -46,16 +47,32 @@ const authMiddleware = (req, res, next) => {
 
 const adminMiddleware = (req, res, next) => {
 
-    if (req.user.role !== "admin") {
-
-        return res.status(403).json({
+    if (!req.user || !req.user.id) {
+        return res.status(401).json({
             success: false,
-            message: "Admin Access Only"
+            message: "Unauthorized"
         });
-
     }
 
-    next();
+    const sql = "SELECT id, role, status FROM users WHERE id = ?";
+    connection.query(sql, [req.user.id], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+
+        if (results.length === 0 || results[0].role !== "admin" || results[0].status === "blocked") {
+            return res.status(403).json({
+                success: false,
+                message: "Admin Access Only"
+            });
+        }
+
+        req.user.role = results[0].role;
+        next();
+    });
 
 };
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const connection = require("../config/db");
 
 const {
     register,
@@ -8,7 +9,8 @@ const {
 } = require("../controller/authController");
 
 const {
-    authMiddleware
+    authMiddleware,
+    adminMiddleware
 } = require("../middleware/authMiddleware");
 
 const jwt = require("jsonwebtoken");
@@ -18,7 +20,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 
-// Protected Route (returns success: false instead of 401 if unauthenticated)
+// Protected Session Route (Queries MySQL for fresh role & status)
 router.get("/me", (req, res) => {
     res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
     let token = req.cookies ? req.cookies.token : null;
@@ -39,9 +41,28 @@ router.get("/me", (req, res) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.json({
-            success: true,
-            user: decoded
+        
+        // Fetch real-time user record from MySQL
+        const sql = "SELECT id, name, email, role, status FROM users WHERE id = ?";
+        connection.query(sql, [decoded.id], (err, results) => {
+            if (err || results.length === 0 || results[0].status === "blocked") {
+                return res.json({
+                    success: false,
+                    message: "User not found or blocked"
+                });
+            }
+
+            const dbUser = results[0];
+            res.json({
+                success: true,
+                user: {
+                    id: dbUser.id,
+                    name: dbUser.name,
+                    email: dbUser.email,
+                    role: dbUser.role,
+                    status: dbUser.status
+                }
+            });
         });
     } catch (error) {
         res.json({
@@ -51,13 +72,21 @@ router.get("/me", (req, res) => {
     }
 });
 
-router.get("/welcome", authMiddleware, (req, res) => {
+// Admin Verification Endpoint for Frontend Route Guard
+router.get("/verify-admin", authMiddleware, adminMiddleware, (req, res) => {
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    res.json({
+        success: true,
+        isAdmin: true,
+        user: req.user
+    });
+});
 
+router.get("/welcome", authMiddleware, (req, res) => {
     res.json({
         success: true,
         message: `Welcome ${req.user.email}`
     });
-
 });
 
 module.exports = router;
