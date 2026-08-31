@@ -9,11 +9,10 @@ const dbConfig = {
     database: process.env.DB_NAME || "ecommerce",
     waitForConnections: true,
     connectionLimit: process.env.DB_CONNECTION_LIMIT ? parseInt(process.env.DB_CONNECTION_LIMIT, 10) : 1,
-    maxIdle: 1,
-    idleTimeout: 10000,
+    maxIdle: 0,           // ✅ Instant idle connection cleanup for Vercel Lambdas
+    idleTimeout: 1000,    // ✅ 1-second idle timeout to prevent sleeping zombie connections on Clever Cloud
     queueLimit: 0,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 0
+    enableKeepAlive: false
 };
 
 // Check if Aiven MySQL or custom SSL mode is requested
