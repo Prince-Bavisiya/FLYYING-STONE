@@ -60,15 +60,13 @@ if (!pool.__retryWrapped) {
     ["query", "execute"].forEach((method) => {
         if (typeof pool[method] === "function") {
             const originalMethod = pool[method].bind(pool);
-            pool[method] = function (sql, values, cb) {
-                let callback = typeof values === "function" ? values : cb;
-                let params = typeof values === "function" ? [] : values;
-
+            pool[method] = function (...args) {
+                const callback = typeof args[args.length - 1] === "function" ? args.pop() : null;
                 let retries = 0;
                 const maxRetries = 5;
 
                 function executeWithRetry() {
-                    originalMethod(sql, params, (err, results, fields) => {
+                    originalMethod(...args, (err, results, fields) => {
                         const isLimitError =
                             err &&
                             (err.code === "ER_USER_LIMIT_REACHED" ||
