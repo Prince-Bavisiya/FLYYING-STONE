@@ -175,11 +175,11 @@ const getOrderChart = (req, res) => {
 
     const sql = `
         SELECT
-            DATE(created_at) AS date,
+            DATE_FORMAT(created_at, '%Y-%m-%d') AS date,
             COUNT(*) AS orders
         FROM orders
-        GROUP BY DATE(created_at)
-        ORDER BY DATE(created_at)
+        GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d')
+        ORDER BY date ASC
     `;
 
     connection.query(sql, (err, results) => {
@@ -208,12 +208,12 @@ const getRevenueChart = (req, res) => {
 
     const sql = `
         SELECT
-            DATE(created_at) AS date,
+            DATE_FORMAT(created_at, '%Y-%m-%d') AS date,
             SUM(total_amount) AS revenue
         FROM orders
         WHERE payment_status='paid'
-        GROUP BY DATE(created_at)
-        ORDER BY DATE(created_at)
+        GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d')
+        ORDER BY date ASC
     `;
 
     connection.query(sql, (err, results) => {
@@ -281,7 +281,7 @@ const getTopProducts = (req, res) => {
         FROM order_items oi
         JOIN products p
         ON oi.product_id=p.id
-        GROUP BY p.id
+        GROUP BY p.id, p.name, p.image
         ORDER BY sold DESC
         LIMIT 5
     `;
