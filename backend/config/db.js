@@ -54,5 +54,37 @@ if (!global.__mysqlPool) {
 
 const pool = global.__mysqlPool;
 
+// 🔧 Auto-retry wrapper for pool.query when max_user_connections is exceeded in serverless lambdas
+if (!pool.__retryWrapped) {
+    const originalQuery = pool.query.bind(pool);
+    pool.query = function (sql, values, cb) {
+        let callback = typeof values === "function" ? values : cb;
+        let params = typeof values === "function" ? [] : values;
+
+        let retries = 0;
+        const maxRetries = 3;
+
+        function executeQuery() {
+            originalQuery(sql, params, (err, results, fields) => {
+                if (
+                    err &&
+                    (err.code === "ER_USER_LIMIT_REACHED" ||
+                        (err.message && err.message.includes("max_user_connections"))) &&
+                    retries < maxRetries
+                ) {
+                    retries++;
+                    console.warn(`[DB RETRY] max_user_connections hit. Retrying (${retries}/${maxRetries}) in 500ms...`);
+                    setTimeout(executeQuery, 500);
+                } else {
+                    if (callback) callback(err, results, fields);
+                }
+            });
+        }
+
+        executeQuery();
+    };
+    pool.__retryWrapped = true;
+}
+
 module.exports = pool;                     // ✅ callback wale controllers ke liye
 module.exports.promise = pool.promise();   // ✅ async/await wale controllers ke liye
