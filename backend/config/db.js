@@ -54,37 +54,76 @@ if (!global.__mysqlPool) {
 
 const pool = global.__mysqlPool;
 
-// 🔧 Auto-retry wrapper for pool.query when max_user_connections is exceeded in serverless lambdas
+// 🔧 Auto-retry wrapper for mysql2 queries when max_user_connections is exceeded in serverless lambdas
 if (!pool.__retryWrapped) {
-    const originalQuery = pool.query.bind(pool);
-    pool.query = function (sql, values, cb) {
-        let callback = typeof values === "function" ? values : cb;
-        let params = typeof values === "function" ? [] : values;
+    // 1. Wrap Callback Pool Query & Execute
+    ["query", "execute"].forEach((method) => {
+        if (typeof pool[method] === "function") {
+            const originalMethod = pool[method].bind(pool);
+            pool[method] = function (sql, values, cb) {
+                let callback = typeof values === "function" ? values : cb;
+                let params = typeof values === "function" ? [] : values;
 
-        let retries = 0;
-        const maxRetries = 3;
+                let retries = 0;
+                const maxRetries = 5;
 
-        function executeQuery() {
-            originalQuery(sql, params, (err, results, fields) => {
-                if (
-                    err &&
-                    (err.code === "ER_USER_LIMIT_REACHED" ||
-                        (err.message && err.message.includes("max_user_connections"))) &&
-                    retries < maxRetries
-                ) {
-                    retries++;
-                    console.warn(`[DB RETRY] max_user_connections hit. Retrying (${retries}/${maxRetries}) in 500ms...`);
-                    setTimeout(executeQuery, 500);
-                } else {
-                    if (callback) callback(err, results, fields);
+                function executeWithRetry() {
+                    originalMethod(sql, params, (err, results, fields) => {
+                        const isLimitError =
+                            err &&
+                            (err.code === "ER_USER_LIMIT_REACHED" ||
+                                (err.message && err.message.includes("max_user_connections")));
+                        if (isLimitError && retries < maxRetries) {
+                            retries++;
+                            const delay = retries * 300; // 300ms, 600ms, 900ms, 1200ms, 1500ms
+                            console.warn(`[DB CALLBACK RETRY] max_user_connections hit. Retrying (${retries}/${maxRetries}) in ${delay}ms...`);
+                            setTimeout(executeWithRetry, delay);
+                        } else {
+                            if (callback) callback(err, results, fields);
+                        }
+                    });
                 }
-            });
-        }
 
-        executeQuery();
-    };
+                executeWithRetry();
+            };
+        }
+    });
+
     pool.__retryWrapped = true;
 }
 
+// 2. Wrap Promise Pool Query & Execute
+const promisePool = pool.promise();
+if (!promisePool.__retryWrapped) {
+    ["query", "execute"].forEach((method) => {
+        if (typeof promisePool[method] === "function") {
+            const originalMethod = promisePool[method].bind(promisePool);
+            promisePool[method] = async function (...args) {
+                let retries = 0;
+                const maxRetries = 5;
+                while (true) {
+                    try {
+                        return await originalMethod(...args);
+                    } catch (err) {
+                        const isLimitError =
+                            err &&
+                            (err.code === "ER_USER_LIMIT_REACHED" ||
+                                (err.message && err.message.includes("max_user_connections")));
+                        if (isLimitError && retries < maxRetries) {
+                            retries++;
+                            const delay = retries * 300;
+                            console.warn(`[DB PROMISE RETRY] max_user_connections hit. Retrying (${retries}/${maxRetries}) in ${delay}ms...`);
+                            await new Promise((resolve) => setTimeout(resolve, delay));
+                        } else {
+                            throw err;
+                        }
+                    }
+                }
+            };
+        }
+    });
+    promisePool.__retryWrapped = true;
+}
+
 module.exports = pool;                     // ✅ callback wale controllers ke liye
-module.exports.promise = pool.promise();   // ✅ async/await wale controllers ke liye
+module.exports.promise = promisePool;      // ✅ async/await wale controllers ke liye
